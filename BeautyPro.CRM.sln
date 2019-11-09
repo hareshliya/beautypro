@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyPro.CRM.EF", "BeautyPro.CRM.EF\BeautyPro.CRM.EF.csproj", "{D94C0C78-13EF-4B4C-BA61-4DBC4261DA54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyPro.CRM.Mapper", "BeautyPro.CRM.Mapper\BeautyPro.CRM.Mapper.csproj", "{24D36AAF-73A3-4ECF-801E-01E1052CE194}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyPro.CRM.Contract", "BeautyPro.CRM.Contract\BeautyPro.CRM.Contract.csproj", "{2534A802-74D5-4CA3-B61F-25DC0D522171}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyPro.CRM.Api", "BeautyPro.CRM.Api\BeautyPro.CRM.Api.csproj", "{9BEAB978-7EE5-4A14-B600-E7B2CF69C79C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyProCRM.Business", "BeautyProCRM.Business\BeautyProCRM.Business.csproj", "{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{BB625663-BA61-4A1C-913A-3A9D792BEC0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D94C0C78-13EF-4B4C-BA61-4DBC4261DA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94C0C78-13EF-4B4C-BA61-4DBC4261DA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94C0C78-13EF-4B4C-BA61-4DBC4261DA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94C0C78-13EF-4B4C-BA61-4DBC4261DA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D36AAF-73A3-4ECF-801E-01E1052CE194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D36AAF-73A3-4ECF-801E-01E1052CE194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D36AAF-73A3-4ECF-801E-01E1052CE194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D36AAF-73A3-4ECF-801E-01E1052CE194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2534A802-74D5-4CA3-B61F-25DC0D522171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2534A802-74D5-4CA3-B61F-25DC0D522171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2534A802-74D5-4CA3-B61F-25DC0D522171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2534A802-74D5-4CA3-B61F-25DC0D522171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BEAB978-7EE5-4A14-B600-E7B2CF69C79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BEAB978-7EE5-4A14-B600-E7B2CF69C79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BEAB978-7EE5-4A14-B600-E7B2CF69C79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BEAB978-7EE5-4A14-B600-E7B2CF69C79C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1252C45-B047-4A0F-BB7B-D51CE7C24976}
+	EndGlobalSection
+EndGlobal
