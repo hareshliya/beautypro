@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyPro.CRM.Api", "Beauty
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeautyProCRM.Business", "BeautyProCRM.Business\BeautyProCRM.Business.csproj", "{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{BB625663-BA61-4A1C-913A-3A9D792BEC0C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E6DC7F2-44C9-40BE-96D1-A5D96DC581DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB625663-BA61-4A1C-913A-3A9D792BEC0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
