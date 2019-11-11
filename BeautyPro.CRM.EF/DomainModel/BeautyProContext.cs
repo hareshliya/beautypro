@@ -202,7 +202,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.TblCustomer)
+                    .WithMany(p => p.Customers)
                     .HasForeignKey(d => d.BranchId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_Customer_Tbl_Branch");
@@ -258,7 +258,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.TblCustomerGiftVoucher)
+                    .WithMany(p => p.CustomerGiftVouchers)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Customer");
@@ -453,7 +453,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.TblCustomerSchedule)
+                    .WithMany(p => p.CustomerSchedules)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerSchedule_Tbl_Customer");
@@ -936,7 +936,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasMaxLength(100);
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.TblMastDepartment)
+                    .WithMany(p => p.Departments)
                     .HasForeignKey(d => d.BranchId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_Mast_Department_Tbl_Branch");
@@ -961,7 +961,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasMaxLength(100);
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.TblMastDesignation)
+                    .WithMany(p => p.Designations)
                     .HasForeignKey(d => d.BranchId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_Mast_Designation_Tbl_Branch");
@@ -1135,7 +1135,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.TblMastTreatmentType)
+                    .WithMany(p => p.TreatmentTypes)
                     .HasForeignKey(d => d.BranchId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_Mast_TreatmentType_Tbl_Branch");

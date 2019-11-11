@@ -34,6 +34,9 @@ namespace BeautyPro.CRM.Mapper
 
             cfg.CreateMap<Department, DepartmentDTO>();
             cfg.CreateMap<DepartmentDTO, Department>();
+
+            cfg.CreateMap<Customer, CustomerDTO>();
+            cfg.CreateMap<CustomerDTO, Customer>();
         }
     }
 }

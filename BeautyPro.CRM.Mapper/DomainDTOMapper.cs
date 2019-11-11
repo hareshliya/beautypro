@@ -43,5 +43,15 @@ namespace BeautyPro.CRM.Mapper
             return AutoMapper.Mapper.Map<CustomerGiftVoucherDTO, CustomerGiftVoucher>(voucher);
         }
 
+        public static List<CustomerDTO> ToCustomerDTOs(List<Customer> customers)
+        {
+            return AutoMapper.Mapper.Map<List<Customer>, List<CustomerDTO>>(customers);
+        }
+
+        public static Customer ToCustomerDomain(CustomerDTO customer)
+        {
+            return AutoMapper.Mapper.Map<CustomerDTO, Customer>(customer);
+        }
+
     }
 }

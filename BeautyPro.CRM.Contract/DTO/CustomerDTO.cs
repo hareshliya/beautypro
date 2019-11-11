@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace BeautyPro.CRM.EF.DomainModel
+namespace BeautyPro.CRM.Contract.DTO
 {
-    [Table("Tbl_Customer")]
-    public partial class Customer
+    public class CustomerDTO
     {
-        public Customer()
-        {
-            CustomerGiftVouchers = new HashSet<CustomerGiftVoucher>();
-            CustomerSchedules = new HashSet<CustomerSchedule>();
-        }
-
         public string CustomerId { get; set; }
         public string FullName { get; set; }
         public string MobileNo { get; set; }
@@ -29,9 +22,5 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime EnteredDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-
-        public virtual Branch Branch { get; set; }
-        public virtual ICollection<CustomerGiftVoucher> CustomerGiftVouchers { get; set; }
-        public virtual ICollection<CustomerSchedule> CustomerSchedules { get; set; }
     }
 }

@@ -9,10 +9,10 @@ namespace BeautyPro.CRM.EF.DomainModel
     {
         public Branch()
         {
-            TblCustomer = new HashSet<Customer>();
-            TblMastDepartment = new HashSet<Department>();
-            TblMastDesignation = new HashSet<TblMastDesignation>();
-            TblMastTreatmentType = new HashSet<TreatmentType>();
+            Customers = new HashSet<Customer>();
+            Departments = new HashSet<Department>();
+            Designations = new HashSet<TblMastDesignation>();
+            TreatmentTypes = new HashSet<TreatmentType>();
         }
 
         public int BranchId { get; set; }
@@ -25,9 +25,9 @@ namespace BeautyPro.CRM.EF.DomainModel
         public int CompanyId { get; set; }
 
         public virtual TblCompany Company { get; set; }
-        public virtual ICollection<Customer> TblCustomer { get; set; }
-        public virtual ICollection<Department> TblMastDepartment { get; set; }
-        public virtual ICollection<TblMastDesignation> TblMastDesignation { get; set; }
-        public virtual ICollection<TreatmentType> TblMastTreatmentType { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<TblMastDesignation> Designations { get; set; }
+        public virtual ICollection<TreatmentType> TreatmentTypes { get; set; }
     }
 }
