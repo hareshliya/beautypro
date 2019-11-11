@@ -20,15 +20,6 @@ namespace BeautyPro.CRM.Api.Services
     {
         private readonly IUserRepository _userRepository;
 
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        // private List<User> _users = t
-
-        //private List<User> _users = new List<User>
-        //{
-        //    new User { UserId = 1, FullName = "Admin", UserName = "admin", Password = "admin", UserType = Role.Admin },
-         
-        //};
-
         private readonly AppSettings _appSettings;
 
         public UserService(
@@ -44,7 +35,6 @@ namespace BeautyPro.CRM.Api.Services
         {
 
             var user = _userRepository.FirstOrDefault(x => x.UserName == username && x.Password == password);
-            // var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
