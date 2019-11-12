@@ -24,7 +24,7 @@ namespace BeautyProCRM.Business
         {
             var customers = _customerRepository.All;
 
-            if (string.IsNullOrWhiteSpace(request.SearchText))
+            if (!string.IsNullOrWhiteSpace(request.SearchText))
             {
                 customers = customers.Where(c => c.FullName.Contains(request.SearchText));
             }
@@ -34,9 +34,11 @@ namespace BeautyProCRM.Business
 
         public void AddNewCustomer(NewCustomerRequest request)
         {
+            var customerNo = String.Format("C{0:d9}", (DateTime.Now.Ticks / 10) % 1000000000);
+
             _customerRepository.Add(DomainDTOMapper.ToCustomerDomain(new CustomerDTO()
             {
-                CustomerId = request.CustomerId,
+                CustomerId = customerNo,
                 Address = request.Address,
                 FullName = request.Name,
                 Gender = request.Gender,
