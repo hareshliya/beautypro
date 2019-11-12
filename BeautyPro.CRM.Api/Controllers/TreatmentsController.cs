@@ -31,27 +31,37 @@ namespace BeautyPro.CRM.Api.Controllers
         [HttpGet]
         [Authorize]
         [ProducesResponseType(typeof(TreatmentTypeDTO), (int)HttpStatusCode.OK)]
-        public ActionResult GetAllTreatments()
+        public IActionResult GetAllTreatments()
         {
             return Ok(DomainDTOMapper.ToTreatmentTypesDTOs(_treatmentTypeRepository.GetAll().ToList()));
         }
 
         [HttpPost("employee")]
-        public ActionResult GetTreatmentForUser([FromBody]TreatmentRequest request)
+        public IActionResult GetTreatmentForUser([FromBody]TreatmentRequest request)
         {
             return Ok(_treatmentService.GetTreatmentsForEmployee(request));
         }
 
         [HttpGet("departments")]
-        public ActionResult GetDepartments()
+        public IActionResult GetDepartments()
         {
             return Ok(_treatmentService.GetDepartments());
         }
 
-        [HttpPost]
-        public ActionResult AddNewTreatment([FromBody]TreatmentTypeDTO treatment)
+        [HttpPost("save")]
+        [Authorize]
+        public IActionResult AddNewTreatment([FromBody]TreatmentTypeDTO treatment)
         {
             return Ok(_treatmentService.AddNewTreatment(treatment));
         }
+
+        [HttpGet("filter")]
+        [Authorize]
+        [ProducesResponseType(typeof(TreatmentTypeDTO), (int)HttpStatusCode.OK)]
+        public IActionResult GetFilteredTreatments([FromQuery]TreatmentFilterRequest request)
+        {
+            return Ok(_treatmentService.GetFilteredTreatments(request));
+        }
+
     }
 }

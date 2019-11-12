@@ -34,6 +34,14 @@ namespace BeautyProCRM.Business
             {
                 return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.Where(x => x.IsCanceled).ToList());
             }
+            else if (request.Status == VoucherStatus.Canceled)
+            {
+                return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.Where(x => x.IsCanceled).ToList());
+            }
+            else if (request.Status == VoucherStatus.Canceled)
+            {
+                return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.Where(x => x.IsCanceled).ToList());
+            }
 
             return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.ToList());
         }
