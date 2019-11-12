@@ -482,7 +482,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.Property(e => e.Ttid).HasColumnName("TTId");
 
                 entity.HasOne(d => d.Cs)
-                    .WithMany(p => p.TblCustomerScheduleTreatment)
+                    .WithMany(p => p.CustomerScheduleTreatments)
                     .HasForeignKey(d => d.Csid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerScheduleTreatment_Tbl_CustomerSchedule");
