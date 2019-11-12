@@ -58,12 +58,29 @@ namespace BeautyProCRM.Business
 
         public TreatmentTypeDTO AddNewTreatment(TreatmentTypeDTO treatment)
         {
+            treatment.BranchId = 1;
             treatment.EnteredDate = DateTime.Now;
             treatment.EnteredBy = 1;
             _treatmentTypeRepository.Add(DomainDTOMapper.ToTreatmentTypeDomain(treatment));
             _treatmentTypeRepository.SaveChanges();
 
             return treatment;
+        }
+
+        public List<TreatmentTypeDTO> GetFilteredTreatments(TreatmentFilterRequest request)
+        {
+            var treatmentTypes = _treatmentTypeRepository
+                .All.Include(c => c.Department)
+                .ToList();
+
+            if (request.DepartmentId.HasValue && request.DepartmentId.Value != 0)
+            {
+                treatmentTypes = treatmentTypes
+                    .Where(x => x.DepartmentId == request.DepartmentId.Value)
+                    .ToList();
+            }
+
+            return DomainDTOMapper.ToTreatmentTypesDTOs(treatmentTypes.ToList());
         }
     }
 }
