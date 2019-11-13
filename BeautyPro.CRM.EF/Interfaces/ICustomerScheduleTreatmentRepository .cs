@@ -5,7 +5,8 @@ using System.Text;
 
 namespace BeautyPro.CRM.EF.Interfaces
 {
-    public interface ICustomerScheduleRepository : IRepository<CustomerSchedule>
+    public interface ICustomerScheduleTreatmentRepository : IRepository<CustomerScheduleTreatment>
     {
+
     }
 }

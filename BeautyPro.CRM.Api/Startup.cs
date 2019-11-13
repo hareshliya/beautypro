@@ -80,6 +80,8 @@ namespace BeautyPro.CRM.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerScheduleTreatmentRepository , CustomerScheduleTreatmentRepository>();
+            services.AddScoped<ICustomerScheduleTreatmentService, CustomerScheduleTreatmentService>();
             services.AddScoped<ICustomerScheduleRepository, CustomerScheduleRepository>();
             services.AddScoped<ICustomerScheduleService, CustomerScheduleService>();
         }

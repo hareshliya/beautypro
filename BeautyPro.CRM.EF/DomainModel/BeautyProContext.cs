@@ -472,8 +472,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.ToTable("Tbl_CustomerScheduleTreatment");
 
                 entity.Property(e => e.Cstid)
-                    .HasColumnName("CSTId")
-                    .ValueGeneratedNever();
+                    .HasColumnName("CSTId");
 
                 entity.Property(e => e.Csid).HasColumnName("CSId");
 
@@ -481,7 +480,7 @@ namespace BeautyPro.CRM.EF.DomainModel
 
                 entity.Property(e => e.Ttid).HasColumnName("TTId");
 
-                entity.HasOne(d => d.Cs)
+                entity.HasOne(d => d.CustomerSchedule)
                     .WithMany(p => p.CustomerScheduleTreatments)
                     .HasForeignKey(d => d.Csid)
                     .OnDelete(DeleteBehavior.ClientSetNull)

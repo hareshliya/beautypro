@@ -5,8 +5,8 @@ using System.Text;
 
 namespace BeautyProCRM.Business.Interfaces
 {
-    public interface ICustomerScheduleService
+    public interface ICustomerScheduleTreatmentService
     {
-        void AddNewAppointment(NewAppointmentRequest request);
+        List<AppointmentListResponse> GetFilteredAppointments(AppointmentFilterRequest request);
     }
 }
