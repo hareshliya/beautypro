@@ -39,7 +39,7 @@ namespace BeautyProCRM.Business
             _customerRepository.Add(DomainDTOMapper.ToCustomerDomain(new CustomerDTO()
             {
                 CustomerId = customerNo,
-                Address = request.Address,
+                Address = request.Address,  
                 FullName = request.Name,
                 Gender = request.Gender,
                 EnteredDate = DateTime.Now,

@@ -11,16 +11,16 @@ namespace BeautyProCRM.Business
 {
     public class CustomerScheduleTreatmentService : ICustomerScheduleTreatmentService
     {
-        private readonly ICustomerScheduleTreatmentRepository _customerScheduleRepository;
+        private readonly ICustomerScheduleTreatmentRepository _customerScheduleTreatmentRepository;
 
-        public CustomerScheduleTreatmentService(ICustomerScheduleTreatmentRepository customerScheduleRepository)
+        public CustomerScheduleTreatmentService(ICustomerScheduleTreatmentRepository customerScheduleTreatmentRepository)
         {
-            _customerScheduleRepository = customerScheduleRepository;
+            _customerScheduleTreatmentRepository = customerScheduleTreatmentRepository;
         }
 
         public List<AppointmentListResponse> GetFilteredAppointments(AppointmentFilterRequest request)
         {
-            var appointments = _customerScheduleRepository.All
+            var appointments = _customerScheduleTreatmentRepository.All
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Customer)
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Department)
                 .Include(c => c.EmpnoNavigation)
@@ -30,10 +30,10 @@ namespace BeautyProCRM.Business
                 {
                     Client = c.CustomerSchedule.Customer.FullName,
                     Date = c.CustomerSchedule.BookedDate,
-                    Duration = 0,
+                    Duration = c.EndTime - c.StartTime,
                     Price = c.Tt.Price,
                     Therapist = c.EmpnoNavigation.Name,
-                    Time = c.CustomerSchedule.BookedDate.TimeOfDay.Minutes,
+                    Time = c.StartTime,
                     Treatment = c.Tt.Ttname,
                     departmentId = c.CustomerSchedule.DepartmentId
                 }).ToList();
