@@ -9,7 +9,7 @@ namespace BeautyPro.CRM.EF.DomainModel
     {
         public CustomerSchedule()
         {
-            TblCustomerScheduleTreatment = new HashSet<CustomerScheduleTreatment>();
+            CustomerScheduleTreatments = new HashSet<CustomerScheduleTreatment>();
         }
 
         public int Csid { get; set; }
@@ -28,6 +28,6 @@ namespace BeautyPro.CRM.EF.DomainModel
 
         public virtual Customer Customer { get; set; }
         public virtual Department Department { get; set; }
-        public virtual ICollection<CustomerScheduleTreatment> TblCustomerScheduleTreatment { get; set; }
+        public virtual ICollection<CustomerScheduleTreatment> CustomerScheduleTreatments { get; set; }
     }
 }
