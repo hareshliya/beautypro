@@ -9,14 +9,14 @@ namespace BeautyPro.CRM.Contract.DTO
         public string GvinvoiceNo { get; set; }
         public string VoucherNo { get; set; }
         public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public DateTime InvDateTime { get; set; }
         public int BranchId { get; set; }
-        public string TransType { get; set; }
         public int Ttid { get; set; }
         public decimal SubTotalAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal DueAmount { get; set; }
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public int Ptid { get; set; }
         public bool IsRedeem { get; set; }
         public bool IsCanceled { get; set; }

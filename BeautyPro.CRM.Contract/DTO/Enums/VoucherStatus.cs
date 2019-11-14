@@ -6,9 +6,9 @@ namespace BeautyPro.CRM.Contract.DTO.Enums
 {
     public enum VoucherStatus
     {
-        Redeemed = 1,
-        Canceled = 2,
-        Issued = 3,
-        All = 4
+        All = 1,
+        Issued = 2,
+        Redeemed = 3,
+        Cancelled = 4
     }
 }

@@ -10,5 +10,7 @@ namespace BeautyProCRM.Business.Interfaces
     {
         List<CustomerGiftVoucherDTO> GetAllVouchers(VoucherRequest request);
         CustomerGiftVoucherDTO AddNewVoucher(CustomerGiftVoucherDTO voucher);
+
+        List<PaymentTypeDTO> GetPaymentTypes();
     }
 }

@@ -43,7 +43,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual DbSet<TblMastLeaveType> TblMastLeaveType { get; set; }
         public virtual DbSet<TblMastNationality> TblMastNationality { get; set; }
         public virtual DbSet<TblMastOriginCountry> TblMastOriginCountry { get; set; }
-        public virtual DbSet<TblMastPaymentType> TblMastPaymentType { get; set; }
+        public virtual DbSet<PaymentType> TblMastPaymentType { get; set; }
         public virtual DbSet<TblMastProductCategory> TblMastProductCategory { get; set; }
         public virtual DbSet<TblMastProductUnits> TblMastProductUnits { get; set; }
         public virtual DbSet<TblMastSuppliers> TblMastSuppliers { get; set; }
@@ -75,7 +75,7 @@ namespace BeautyPro.CRM.EF.DomainModel
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\;Database=BeautyPro_COCO;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-I5O0JTM\\SQLEXPRESS;Database=BeautyPro_COCO;Trusted_Connection=True;");
             }
         }
 
@@ -244,11 +244,6 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.Property(e => e.SubTotalAmount).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.TransType)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Ttid).HasColumnName("TTId");
 
@@ -1022,7 +1017,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasMaxLength(100);
             });
 
-            modelBuilder.Entity<TblMastPaymentType>(entity =>
+            modelBuilder.Entity<PaymentType>(entity =>
             {
                 entity.HasKey(e => e.Ptid);
 

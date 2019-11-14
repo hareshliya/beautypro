@@ -12,7 +12,6 @@ namespace BeautyPro.CRM.EF.DomainModel
         public string CustomerId { get; set; }
         public DateTime InvDateTime { get; set; }
         public int BranchId { get; set; }
-        public string TransType { get; set; }
         public int Ttid { get; set; }
         public decimal SubTotalAmount { get; set; }
         public decimal TaxAmount { get; set; }
@@ -31,7 +30,7 @@ namespace BeautyPro.CRM.EF.DomainModel
 
         public virtual Customer Customer { get; set; }
         public virtual Department Department { get; set; }
-        public virtual TblMastPaymentType Pt { get; set; }
+        public virtual PaymentType Pt { get; set; }
         public virtual TreatmentType Tt { get; set; }
     }
 }

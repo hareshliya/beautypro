@@ -57,7 +57,7 @@ namespace BeautyPro.CRM.Api.Controllers
 
         [HttpGet("filter")]
         [Authorize]
-        [ProducesResponseType(typeof(TreatmentTypeDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(CustomerGiftVoucherDTO), (int)HttpStatusCode.OK)]
         public IActionResult GetFilteredTreatments([FromQuery]TreatmentFilterRequest request)
         {
             return Ok(_treatmentService.GetFilteredTreatments(request));

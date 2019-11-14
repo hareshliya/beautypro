@@ -37,6 +37,15 @@ namespace BeautyPro.CRM.Mapper
 
             cfg.CreateMap<Customer, CustomerDTO>();
             cfg.CreateMap<CustomerDTO, Customer>();
+
+            cfg.CreateMap<CustomerGiftVoucher, CustomerGiftVoucherDTO>()
+                .ForMember(data => data.CustomerName, opt => opt.MapFrom(x => x.Customer.FullName));
+
+            cfg.CreateMap<CustomerGiftVoucherDTO, CustomerGiftVoucher>()
+               .ForMember(c => c.Customer, m => m.Ignore())
+               .ForMember(c => c.Department, m => m.Ignore())
+               .ForMember(c => c.Pt, m => m.Ignore())
+               .ForMember(c => c.Tt, m => m.Ignore());
         }
     }
 }

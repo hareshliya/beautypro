@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BeautyPro.CRM.Contract.DTO;
 using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,16 +24,25 @@ namespace BeautyPro.CRM.Api.Controllers
             this._customerGiftVoucherService = customerGiftVoucherService;
         }
 
-        [HttpPost]
-        public ActionResult GetVouchers([FromBody]VoucherRequest request)
+        [HttpGet("filter")]
+        [Authorize]
+        [ProducesResponseType(typeof(CustomerGiftVoucherDTO), (int)HttpStatusCode.OK)]
+        public ActionResult GetFilteredVouchers([FromQuery]VoucherRequest request)
         {
             return Ok(_customerGiftVoucherService.GetAllVouchers(request));
         }
 
-        [HttpPost]
+        [HttpPost("save")]
+        [Authorize]
         public ActionResult AddNewVoucher([FromBody]CustomerGiftVoucherDTO voucher)
         {
             return Ok(_customerGiftVoucherService.AddNewVoucher(voucher));
+        }
+
+        [HttpGet("paymentTypes")]
+        public IActionResult GetPaymentTypes()
+        {
+            return Ok(_customerGiftVoucherService.GetPaymentTypes());
         }
     }
 }

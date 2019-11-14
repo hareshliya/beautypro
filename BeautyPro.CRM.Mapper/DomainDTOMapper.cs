@@ -53,5 +53,10 @@ namespace BeautyPro.CRM.Mapper
             return AutoMapper.Mapper.Map<CustomerDTO, Customer>(customer);
         }
 
+        public static List<PaymentTypeDTO> ToPaymentTypeDTOs(List<PaymentType> paymentTypes)
+        {
+            return AutoMapper.Mapper.Map<List<PaymentType>, List<PaymentTypeDTO>>(paymentTypes);
+        }
+
     }
 }

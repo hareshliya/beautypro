@@ -35,7 +35,7 @@ namespace BeautyPro.CRM.EF.DomainModel
 
         public virtual CustomerScheduleTreatment Cst { get; set; }
         public virtual Department Department { get; set; }
-        public virtual TblMastPaymentType Pt { get; set; }
+        public virtual PaymentType Pt { get; set; }
         public virtual ICollection<TblCustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
         public virtual ICollection<TblCustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
     }
