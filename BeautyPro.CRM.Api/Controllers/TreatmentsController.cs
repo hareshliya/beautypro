@@ -63,5 +63,20 @@ namespace BeautyPro.CRM.Api.Controllers
             return Ok(_treatmentService.GetFilteredTreatments(request));
         }
 
+        [HttpDelete]
+        [Authorize]
+        public IActionResult DeleteTreatment(int treatmentTypeId)
+        {
+            try
+            {
+                _treatmentService.DeleteTreatment(treatmentTypeId);
+                return Ok(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
     }
 }
