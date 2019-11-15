@@ -24,19 +24,42 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public IActionResult GetCustomer([FromQuery]string customerId)
+        {
+            return Ok(_customerservice.GetCustomer(customerId));
+        }
+
+        [Authorize]
         [HttpGet("search")]
         public IActionResult SearchCustomer([FromQuery]CustomerSearchRequest request)
         {
             return Ok(_customerservice.SearchCustomer(request));
         }
 
+        [Authorize]
         [HttpPost]
-        public IActionResult AddNewCustomer([FromBody]NewCustomerRequest request)
+        public IActionResult AddEditCustomer([FromBody]NewCustomerRequest request)
         {
             try
             {
-                _customerservice.AddNewCustomer(request);
+                _customerservice.AddEditCustomer(request);
                 return Ok(HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public IActionResult DeleteCustomer([FromQuery]string customerId)
+        {
+            try
+            {
+                _customerservice.RemoveCustomer(customerId);
+                return Ok(HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {

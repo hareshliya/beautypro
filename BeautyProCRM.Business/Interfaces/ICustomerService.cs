@@ -9,6 +9,8 @@ namespace BeautyProCRM.Business.Interfaces
     public interface ICustomerService
     {
         List<CustomerDTO> SearchCustomer(CustomerSearchRequest request);
-        void AddNewCustomer(NewCustomerRequest request);
+        void AddEditCustomer(NewCustomerRequest request);
+        void RemoveCustomer(string customerId);
+        CustomerDTO GetCustomer(string customerId);
     }
 }

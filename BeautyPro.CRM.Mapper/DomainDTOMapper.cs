@@ -48,6 +48,11 @@ namespace BeautyPro.CRM.Mapper
             return AutoMapper.Mapper.Map<List<Customer>, List<CustomerDTO>>(customers);
         }
 
+        public static CustomerDTO ToCustomerDTO(Customer customer)
+        {
+            return AutoMapper.Mapper.Map<Customer, CustomerDTO>(customer);
+        }
+
         public static Customer ToCustomerDomain(CustomerDTO customer)
         {
             return AutoMapper.Mapper.Map<CustomerDTO, Customer>(customer);
