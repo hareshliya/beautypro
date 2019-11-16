@@ -82,5 +82,18 @@ namespace BeautyProCRM.Business
 
             return DomainDTOMapper.ToTreatmentTypesDTOs(treatmentTypes.ToList());
         }
+
+        public void DeleteTreatment(int treatmentTypeId)
+        {
+            var treatment = _treatmentTypeRepository
+                .FirstOrDefault(x => x.Ttid == treatmentTypeId);
+
+            if(treatment != null)
+            {
+                _treatmentTypeRepository.Remove(treatment);
+                _treatmentTypeRepository.SaveChanges();
+            }
+
+        }
     }
 }
