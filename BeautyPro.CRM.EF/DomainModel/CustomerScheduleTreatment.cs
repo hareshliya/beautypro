@@ -20,7 +20,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public TimeSpan EndTime { get; set; }
 
         public virtual CustomerSchedule CustomerSchedule { get; set; }
-        public virtual EmployeeDetail EmpnoNavigation { get; set; }
+        public virtual EmployeeDetail Employee { get; set; }
         public virtual TreatmentType Tt { get; set; }
         public virtual ICollection<TblCustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
     }

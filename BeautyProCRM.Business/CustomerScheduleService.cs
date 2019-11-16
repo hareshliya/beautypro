@@ -4,6 +4,7 @@ using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,16 @@ namespace BeautyProCRM.Business
     {
         private readonly ICustomerScheduleRepository _customerScheduleRepository;
         private readonly IEmployeeDetailRepository _employeeDetailRepository;
+        public readonly ICustomerScheduleTreatmentRepository _customerScheduleTreatmentRepository;
         private const string NEW = "New";
 
         public CustomerScheduleService(ICustomerScheduleRepository customerScheduleRepository,
-                                       IEmployeeDetailRepository employeeDetailRepository)
+                                       IEmployeeDetailRepository employeeDetailRepository,
+                                       ICustomerScheduleTreatmentRepository customerScheduleTreatmentRepository)
         {
             _customerScheduleRepository = customerScheduleRepository;
             _employeeDetailRepository = employeeDetailRepository;
+            _customerScheduleTreatmentRepository = customerScheduleTreatmentRepository;
         }
 
         public void AddNewAppointment(NewAppointmentRequest request)
@@ -65,6 +69,30 @@ namespace BeautyProCRM.Business
                 employees = employees.Where(x => x.DepartmentId == departmentId);
             }
             return DomainDTOMapper.ToEmployeeDetailDTOs(employees.ToList());
+        }
+
+        public IList<SchedulersResponse> GetShedules(ScheduleRequest request)
+        {
+            var result = _customerScheduleTreatmentRepository
+                .All
+                .Include(c => c.CustomerSchedule).ThenInclude(x => x.Customer)
+                .Include(c => c.Tt)
+                .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
+                .Include(c => c.Employee).ThenInclude(c => c.Designation)
+                // .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+                .Where(x => x.CustomerSchedule.DepartmentId == request.DepartmentId && x.CustomerSchedule.Status == "New")
+                .Select(v => new { 
+                Therapist = v.Employee.Name,
+                Designation = v.Employee.Designation.Name,
+                Schedules = v
+            }).ToList();
+
+            return result.GroupBy(p => new { p.Therapist, p.Designation }, p => p.Schedules, (key, g) => new SchedulersResponse()
+            {
+                Therapist = key.Therapist,
+                Designation = key.Designation,
+                Schedules = DomainDTOMapper.ToSchedule(g)
+            }).ToList();
         }
     }
 }
