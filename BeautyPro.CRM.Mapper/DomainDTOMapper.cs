@@ -52,10 +52,20 @@ namespace BeautyPro.CRM.Mapper
         {
             return AutoMapper.Mapper.Map<CustomerDTO, Customer>(customer);
         }
-
+        
         public static List<PaymentTypeDTO> ToPaymentTypeDTOs(List<PaymentType> paymentTypes)
         {
             return AutoMapper.Mapper.Map<List<PaymentType>, List<PaymentTypeDTO>>(paymentTypes);
+        }
+
+        public static List<EmployeeDetailDTO> ToEmployeeDetailDTOs(List<EmployeeDetail> employeeDetail)
+        {
+            return AutoMapper.Mapper.Map<List<EmployeeDetail>, List<EmployeeDetailDTO>>(employeeDetail);
+        }
+
+        public static EmployeeDetail ToEmployeeDetailDomain(EmployeeDetailDTO employeeDetail)
+        {
+            return AutoMapper.Mapper.Map<EmployeeDetailDTO, EmployeeDetail>(employeeDetail);
         }
 
     }

@@ -1,9 +1,12 @@
-﻿using BeautyPro.CRM.Contract.DTO.UI;
+﻿using BeautyPro.CRM.Contract.DTO;
+using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
+using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BeautyProCRM.Business
@@ -11,11 +14,14 @@ namespace BeautyProCRM.Business
     public class CustomerScheduleService : ICustomerScheduleService
     {
         private readonly ICustomerScheduleRepository _customerScheduleRepository;
+        private readonly IEmployeeDetailRepository _employeeDetailRepository;
         private const string NEW = "New";
 
-        public CustomerScheduleService(ICustomerScheduleRepository customerScheduleRepository)
+        public CustomerScheduleService(ICustomerScheduleRepository customerScheduleRepository,
+                                       IEmployeeDetailRepository employeeDetailRepository)
         {
             _customerScheduleRepository = customerScheduleRepository;
+            _employeeDetailRepository = employeeDetailRepository;
         }
 
         public void AddNewAppointment(NewAppointmentRequest request)
@@ -26,7 +32,7 @@ namespace BeautyProCRM.Business
             {
                 treatments.Add(new CustomerScheduleTreatment()
                 {
-                    Ttid = treatment.TreatmentTypeId,
+                    Ttid = treatment.Ttid,
                     Empno = treatment.EmpNo,
                     StartTime = treatment.StartTime.TimeOfDay,
                     EndTime = treatment.StartTime.AddMinutes(treatment.Duration).TimeOfDay
@@ -47,6 +53,18 @@ namespace BeautyProCRM.Business
 
             _customerScheduleRepository.Add(customerSchedule);
             _customerScheduleRepository.SaveChanges();
+        }
+
+        public List<EmployeeDetailDTO> GetFilteredEmployees(int departmentId)
+        {
+            var employees = _employeeDetailRepository.All
+            .Where(x => !x.IsDeleted && x.DeletedBy == null);
+
+            if (departmentId != 0)
+            {
+                employees = employees.Where(x => x.DepartmentId == departmentId);
+            }
+            return DomainDTOMapper.ToEmployeeDetailDTOs(employees.ToList());
         }
     }
 }

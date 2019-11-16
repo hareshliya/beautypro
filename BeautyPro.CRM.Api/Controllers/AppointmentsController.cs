@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BeautyPro.CRM.Contract.DTO;
 using BeautyPro.CRM.Contract.DTO.UI;
+using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +19,7 @@ namespace BeautyPro.CRM.Api.Controllers
     {
         private readonly ICustomerScheduleTreatmentService _customerScheduleTreatmentService;
         private readonly ICustomerScheduleService _customerScheduleService;
+        
 
         public AppointmentsController(
             ICustomerScheduleTreatmentService customerScheduleTreatmentService,
@@ -34,7 +37,7 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewTreatment([FromBody]NewAppointmentRequest request)
+        public IActionResult AddNewAppointment([FromBody]NewAppointmentRequest request)
         {
             try
             {
@@ -45,6 +48,14 @@ namespace BeautyPro.CRM.Api.Controllers
             {
                 return BadRequest(ex);
             }
+        }
+
+        [HttpGet("employees")]
+        [Authorize]
+        [ProducesResponseType(typeof(EmployeeDetailDTO), (int)HttpStatusCode.OK)]
+        public IActionResult GetFilteredEmployees([FromQuery]int departmentId)
+        {
+            return Ok(_customerScheduleService.GetFilteredEmployees(departmentId));
         }
 
     }

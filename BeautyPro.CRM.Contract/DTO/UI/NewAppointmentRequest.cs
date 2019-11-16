@@ -18,7 +18,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
 
     public class AppointmentTreatment
     {
-        public int TreatmentTypeId { get; set; }
+        public int Ttid { get; set; }
         public int EmpNo { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
