@@ -23,22 +23,22 @@ namespace BeautyPro.CRM.Api.Controllers
             this._customerservice = customerservice;
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         public IActionResult GetCustomer([FromQuery]string customerId)
         {
             return Ok(_customerservice.GetCustomer(customerId));
         }
 
-        [Authorize]
         [HttpGet("search")]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         public IActionResult SearchCustomer([FromQuery]CustomerSearchRequest request)
         {
             return Ok(_customerservice.SearchCustomer(request));
         }
 
-        [Authorize]
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin,GeneralManager")]
         public IActionResult AddEditCustomer([FromBody]NewCustomerRequest request)
         {
             try
@@ -52,8 +52,8 @@ namespace BeautyPro.CRM.Api.Controllers
             }
         }
 
-        [Authorize]
         [HttpDelete]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
         public IActionResult DeleteCustomer([FromQuery]string customerId)
         {
             try

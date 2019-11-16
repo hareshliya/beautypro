@@ -30,13 +30,14 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [HttpGet("filter")]
-        [Authorize]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         public IActionResult GetFilteredAppointments([FromQuery]AppointmentFilterRequest request)
         {
             return Ok(_customerScheduleTreatmentService.GetFilteredAppointments(request));
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
         public IActionResult AddNewAppointment([FromBody]NewAppointmentRequest request)
         {
             try
@@ -51,7 +52,7 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [HttpGet("employees")]
-        [Authorize]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         [ProducesResponseType(typeof(EmployeeDetailDTO), (int)HttpStatusCode.OK)]
         public IActionResult GetFilteredEmployees([FromQuery]int departmentId)
         {
