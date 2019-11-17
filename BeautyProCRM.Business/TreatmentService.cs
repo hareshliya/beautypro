@@ -58,7 +58,7 @@ namespace BeautyProCRM.Business
 
         public TreatmentTypeDTO AddNewTreatment(TreatmentTypeDTO treatment)
         {
-            treatment.BranchId = 1;
+            treatment.BranchId = treatment.BranchId;
             treatment.EnteredDate = DateTime.Now;
             _treatmentTypeRepository.Add(DomainDTOMapper.ToTreatmentTypeDomain(treatment));
             _treatmentTypeRepository.SaveChanges();

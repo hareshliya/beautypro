@@ -26,6 +26,7 @@ namespace BeautyPro.CRM.Api.Controllers
         [Authorize]
         public IActionResult GetShedules([FromQuery]ScheduleRequest request)
         {
+            request.BranchId = BranchId;
             return Ok(_customerScheduleService.GetShedules(request));
         }
     }

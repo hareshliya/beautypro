@@ -45,7 +45,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
-                _customerservice.AddEditCustomer(request, UserId);
+                _customerservice.AddEditCustomer(request, UserId, BranchId);
                 return Ok(HttpStatusCode.Created);
             }
             catch (Exception ex)

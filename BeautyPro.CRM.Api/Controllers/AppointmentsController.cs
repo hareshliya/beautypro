@@ -43,6 +43,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
+                request.BranchId = BranchId;
                 request.EnteredBy = UserId;
                 _customerScheduleService.AddNewAppointment(request);
                 return Ok(HttpStatusCode.Created);

@@ -53,6 +53,7 @@ namespace BeautyPro.CRM.Api.Controllers
         [Authorize(Roles = "SystemAdmin,GeneralManager")]
         public IActionResult AddNewTreatment([FromBody]TreatmentTypeDTO treatment)
         {
+            treatment.BranchId = BranchId;
             treatment.EnteredBy = UserId;
             return Ok(_treatmentService.AddNewTreatment(treatment));
         }

@@ -37,7 +37,7 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToCustomerDTOs(customers.ToList());
         }
 
-        public void AddEditCustomer(NewCustomerRequest request, int userId)
+        public void AddEditCustomer(NewCustomerRequest request, int userId, int branchId)
         {
             if (!string.IsNullOrWhiteSpace(request.CustomerId))
             {
@@ -45,11 +45,11 @@ namespace BeautyProCRM.Business
             }
             else
             {
-                AddCustomer(request, userId);
+                AddCustomer(request, userId, branchId);
             }
         }
 
-        private void AddCustomer(NewCustomerRequest request, int userId)
+        private void AddCustomer(NewCustomerRequest request, int userId, int branchId)
         {
             var customerNo = String.Format("C{0:d9}", (DateTime.Now.Ticks / 10) % 1000000000);
 
@@ -64,7 +64,7 @@ namespace BeautyProCRM.Business
                 Email = request.Email,
                 MobileNo = request.ContactNo,
                 EnteredBy = userId,
-                BranchId = 1
+                BranchId = branchId
             }));
 
             _customerRepository.SaveChanges();
