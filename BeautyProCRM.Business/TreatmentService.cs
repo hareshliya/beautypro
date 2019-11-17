@@ -60,7 +60,6 @@ namespace BeautyProCRM.Business
         {
             treatment.BranchId = 1;
             treatment.EnteredDate = DateTime.Now;
-            treatment.EnteredBy = 1;
             _treatmentTypeRepository.Add(DomainDTOMapper.ToTreatmentTypeDomain(treatment));
             _treatmentTypeRepository.SaveChanges();
 
@@ -83,13 +82,15 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToTreatmentTypesDTOs(treatmentTypes.ToList());
         }
 
-        public void DeleteTreatment(int treatmentTypeId)
+        public void DeleteTreatment(int treatmentTypeId, int deletedBy)
         {
             var treatment = _treatmentTypeRepository
                 .FirstOrDefault(x => x.Ttid == treatmentTypeId);
 
             if(treatment != null)
             {
+                treatment.DeletedBy = deletedBy;
+                treatment.DeletedDate = DateTime.Now;
                 _treatmentTypeRepository.Remove(treatment);
                 _treatmentTypeRepository.SaveChanges();
             }

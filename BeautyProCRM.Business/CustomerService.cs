@@ -37,19 +37,19 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToCustomerDTOs(customers.ToList());
         }
 
-        public void AddEditCustomer(NewCustomerRequest request)
+        public void AddEditCustomer(NewCustomerRequest request, int userId)
         {
             if (!string.IsNullOrWhiteSpace(request.CustomerId))
             {
-                EditCustomer(request);
+                EditCustomer(request, userId);
             }
             else
             {
-                AddCustomer(request);
+                AddCustomer(request, userId);
             }
         }
 
-        private void AddCustomer(NewCustomerRequest request)
+        private void AddCustomer(NewCustomerRequest request, int userId)
         {
             var customerNo = String.Format("C{0:d9}", (DateTime.Now.Ticks / 10) % 1000000000);
 
@@ -63,14 +63,14 @@ namespace BeautyProCRM.Business
                 LoyaltyCardNo = request.LoyaltyCardNo,
                 Email = request.Email,
                 MobileNo = request.ContactNo,
-                EnteredBy = 1,
+                EnteredBy = userId,
                 BranchId = 1
             }));
 
             _customerRepository.SaveChanges();
         }
 
-        private void EditCustomer(NewCustomerRequest request)
+        private void EditCustomer(NewCustomerRequest request, int userId)
         {
             var customer = _customerRepository.FirstOrDefault(x => x.CustomerId == request.CustomerId);
 
@@ -82,12 +82,14 @@ namespace BeautyProCRM.Business
                 customer.Email = request.Email;
                 customer.Gender = request.Gender;
                 customer.LoyaltyCardNo = request.LoyaltyCardNo;
+                customer.ModifiedBy = userId;
+                customer.ModifiedDate = DateTime.Now;
             }
 
             _customerRepository.SaveChanges();
         }
 
-        public void RemoveCustomer(string customerId)
+        public void RemoveCustomer(string customerId, int userId)
         {
             var customer = _customerRepository
                 .FirstOrDefault(c => c.CustomerId == customerId);

@@ -12,6 +12,6 @@ namespace BeautyProCRM.Business.Interfaces
         List<DepartmentDTO> GetDepartments();
         TreatmentTypeDTO AddNewTreatment(TreatmentTypeDTO treatment);
         List<TreatmentTypeDTO> GetFilteredTreatments(TreatmentFilterRequest request);
-        void DeleteTreatment(int treatmentTypeId);
+        void DeleteTreatment(int treatmentTypeId, int deletedBy);
     }
 }

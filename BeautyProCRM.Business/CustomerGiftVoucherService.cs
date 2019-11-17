@@ -55,7 +55,7 @@ namespace BeautyProCRM.Business
         {
             voucher.GvinvoiceNo = String.Format("V{0:d9}", (DateTime.Now.Ticks / 10) % 1000000000);
             voucher.EnteredDate = DateTime.Now;
-            voucher.EnteredBy = 1;
+            voucher.EnteredBy = voucher.EnteredBy;
             voucher.InvDateTime = DateTime.Now;
             voucher.BranchId = 1;
             voucher.IsRedeem = false;

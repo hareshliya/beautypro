@@ -15,15 +15,16 @@ namespace BeautyPro.CRM.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentsController : ControllerBase
+    public class AppointmentsController : BeautyProBaseController
     {
         private readonly ICustomerScheduleTreatmentService _customerScheduleTreatmentService;
         private readonly ICustomerScheduleService _customerScheduleService;
         
 
         public AppointmentsController(
+            IHttpContextAccessor httpContextAccessor,
             ICustomerScheduleTreatmentService customerScheduleTreatmentService,
-            ICustomerScheduleService customerScheduleService)
+            ICustomerScheduleService customerScheduleService) : base(httpContextAccessor)
         {
             _customerScheduleTreatmentService = customerScheduleTreatmentService;
             _customerScheduleService = customerScheduleService;
@@ -42,6 +43,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
+                request.EnteredBy = UserId;
                 _customerScheduleService.AddNewAppointment(request);
                 return Ok(HttpStatusCode.Created);
             }

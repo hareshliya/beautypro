@@ -50,7 +50,7 @@ namespace BeautyProCRM.Business
                 Status = NEW,
                 DepartmentId = request.DepartmentId,
                 BranchId = request.BranchId,
-                EnteredBy = 2,
+                EnteredBy = request.EnteredBy,
                 EnteredDate = DateTime.Now,
                 CustomerScheduleTreatments = treatments
             };

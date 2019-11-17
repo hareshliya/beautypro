@@ -12,11 +12,12 @@ namespace BeautyPro.CRM.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchedulersController : ControllerBase
+    public class SchedulersController : BeautyProBaseController
     {
         private readonly ICustomerScheduleService _customerScheduleService;
         public SchedulersController(
-            ICustomerScheduleService customerScheduleService)
+            IHttpContextAccessor httpContextAccessor,
+            ICustomerScheduleService customerScheduleService) : base(httpContextAccessor)
         {
             _customerScheduleService = customerScheduleService;
         }
