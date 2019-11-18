@@ -14,11 +14,13 @@ namespace BeautyPro.CRM.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BeautyProBaseController
     {
         private readonly ICustomerService _customerservice;
 
-        public CustomersController(ICustomerService customerservice)
+        public CustomersController(
+            IHttpContextAccessor httpContextAccessor,
+            ICustomerService customerservice) : base(httpContextAccessor)
         {
             this._customerservice = customerservice;
         }
@@ -43,7 +45,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
-                _customerservice.AddEditCustomer(request);
+                _customerservice.AddEditCustomer(request, UserId, BranchId);
                 return Ok(HttpStatusCode.Created);
             }
             catch (Exception ex)
@@ -58,7 +60,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
-                _customerservice.RemoveCustomer(customerId);
+                _customerservice.RemoveCustomer(customerId, UserId);
                 return Ok(HttpStatusCode.NoContent);
             }
             catch (Exception ex)

@@ -32,7 +32,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual DbSet<TblEmployeeDeduction> TblEmployeeDeduction { get; set; }
         public virtual DbSet<EmployeeDetail> TblEmployeeDetail { get; set; }
         public virtual DbSet<TblEmployeeLeave> TblEmployeeLeave { get; set; }
-        public virtual DbSet<TblEmployeeRoster> TblEmployeeRoster { get; set; }
+        public virtual DbSet<EmployeeRoster> TblEmployeeRoster { get; set; }
         public virtual DbSet<TblEmployeeSalarySupport> TblEmployeeSalarySupport { get; set; }
         public virtual DbSet<TblMastAllowances> TblMastAllowances { get; set; }
         public virtual DbSet<TblMastBank> TblMastBank { get; set; }
@@ -75,7 +75,7 @@ namespace BeautyPro.CRM.EF.DomainModel
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-I5O0JTM\\SQLEXPRESS;Database=BeautyPro_COCO;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=BeautyPro_COCO;Trusted_Connection=True;");
             }
         }
 
@@ -481,7 +481,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerScheduleTreatment_Tbl_CustomerSchedule");
 
-                entity.HasOne(d => d.EmpnoNavigation)
+                entity.HasOne(d => d.Employee)
                     .WithMany(p => p.TblCustomerScheduleTreatment)
                     .HasForeignKey(d => d.Empno)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -769,7 +769,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_EmployeeLeave_Tbl_Mast_LeaveType");
             });
 
-            modelBuilder.Entity<TblEmployeeRoster>(entity =>
+            modelBuilder.Entity<EmployeeRoster>(entity =>
             {
                 entity.HasKey(e => e.RosterId)
                     .HasName("PK_Tbl_RosterDetail");
@@ -789,7 +789,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.Property(e => e.WorkingDate).HasColumnType("date");
 
                 entity.HasOne(d => d.EmpnoNavigation)
-                    .WithMany(p => p.TblEmployeeRoster)
+                    .WithMany(p => p.EmployeeRosters)
                     .HasForeignKey(d => d.Empno)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_RosterDetail_Tbl_EmployeeDetail");

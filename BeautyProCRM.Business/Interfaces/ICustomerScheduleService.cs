@@ -10,5 +10,6 @@ namespace BeautyProCRM.Business.Interfaces
     {
         void AddNewAppointment(NewAppointmentRequest request);
         List<EmployeeDetailDTO> GetFilteredEmployees(int departmentId);
+        IList<SchedulersResponse> GetShedules(ScheduleRequest request);
     }
 }

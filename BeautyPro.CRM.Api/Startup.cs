@@ -15,6 +15,7 @@ using BeautyProCRM.Business.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -65,10 +66,11 @@ namespace BeautyPro.CRM.Api
                 };
             });
 
-            var connection = @"Server=DESKTOP-I5O0JTM\SQLEXPRESS;Database=BeautyPro_COCO;Trusted_Connection=True;";
+            var connection = @"Server=.;Database=BeautyPro_COCO;Trusted_Connection=True;";
             services.AddDbContext<BeautyProContext>(opt => opt.UseSqlServer(connection));
 
             services.AddMvc(opt => opt.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IContextFactory, ContextFactory>();
             services.AddScoped<ITreatmentTypeRepository, TreatmentTypeRepository>();
             services.AddScoped<ITreatmentService, TreatmentService>();

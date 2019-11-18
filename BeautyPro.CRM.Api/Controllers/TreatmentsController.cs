@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using BeautyPro.CRM.Api.Models;
 using BeautyPro.CRM.Contract.DTO;
 using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.Interfaces;
@@ -17,16 +14,17 @@ namespace BeautyPro.CRM.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreatmentsController : ControllerBase
+    public class TreatmentsController : BeautyProBaseController
     {
         private readonly ITreatmentTypeRepository _treatmentTypeRepository;
         private readonly ITreatmentService _treatmentService;
         public TreatmentsController(
+            IHttpContextAccessor httpContextAccessor,
             ITreatmentService treatmentService,
-            ITreatmentTypeRepository treatmentTypeRepository)
+            ITreatmentTypeRepository treatmentTypeRepository) : base(httpContextAccessor)
         {
-            this._treatmentTypeRepository = treatmentTypeRepository;
-            this._treatmentService = treatmentService;
+            _treatmentTypeRepository = treatmentTypeRepository;
+            _treatmentService = treatmentService;
         }
 
         [HttpGet]
@@ -55,6 +53,8 @@ namespace BeautyPro.CRM.Api.Controllers
         [Authorize(Roles = "SystemAdmin,GeneralManager")]
         public IActionResult AddNewTreatment([FromBody]TreatmentTypeDTO treatment)
         {
+            treatment.BranchId = BranchId;
+            treatment.EnteredBy = UserId;
             return Ok(_treatmentService.AddNewTreatment(treatment));
         }
 
@@ -72,7 +72,7 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             try
             {
-                _treatmentService.DeleteTreatment(treatmentTypeId);
+                _treatmentService.DeleteTreatment(treatmentTypeId, UserId);
                 return Ok(HttpStatusCode.NoContent);
             }
             catch (Exception ex)

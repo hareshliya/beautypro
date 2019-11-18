@@ -16,7 +16,7 @@ namespace BeautyPro.CRM.EF.DomainModel
             TblEmployeeCommision = new HashSet<TblEmployeeCommision>();
             TblEmployeeDeduction = new HashSet<TblEmployeeDeduction>();
             TblEmployeeLeave = new HashSet<TblEmployeeLeave>();
-            TblEmployeeRoster = new HashSet<TblEmployeeRoster>();
+            EmployeeRosters = new HashSet<EmployeeRoster>();
         }
 
         public int Empno { get; set; }
@@ -59,6 +59,6 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual ICollection<TblEmployeeCommision> TblEmployeeCommision { get; set; }
         public virtual ICollection<TblEmployeeDeduction> TblEmployeeDeduction { get; set; }
         public virtual ICollection<TblEmployeeLeave> TblEmployeeLeave { get; set; }
-        public virtual ICollection<TblEmployeeRoster> TblEmployeeRoster { get; set; }
+        public virtual ICollection<EmployeeRoster> EmployeeRosters { get; set; }
     }
 }

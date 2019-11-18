@@ -23,7 +23,7 @@ namespace BeautyProCRM.Business
             var appointments = _customerScheduleTreatmentRepository.All
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Customer)
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Department)
-                .Include(c => c.EmpnoNavigation)
+                .Include(c => c.Employee)
                 .Include(c => c.Tt)
                 .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null)
                 .Select(c => new AppointmentListResponse()
@@ -32,7 +32,7 @@ namespace BeautyProCRM.Business
                     Date = c.CustomerSchedule.BookedDate,
                     Duration = c.EndTime - c.StartTime,
                     Price = c.Tt.Price,
-                    Therapist = c.EmpnoNavigation.Name,
+                    Therapist = c.Employee.Name,
                     Time = c.StartTime,
                     Treatment = c.Tt.Ttname,
                     departmentId = c.CustomerSchedule.DepartmentId

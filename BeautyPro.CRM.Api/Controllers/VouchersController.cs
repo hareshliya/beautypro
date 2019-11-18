@@ -14,12 +14,13 @@ namespace BeautyPro.CRM.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VouchersController : ControllerBase
+    public class VouchersController : BeautyProBaseController
     {
         private readonly ICustomerGiftVoucherService _customerGiftVoucherService;
 
         public VouchersController(
-            ICustomerGiftVoucherService customerGiftVoucherService)
+            IHttpContextAccessor httpContextAccessor,
+            ICustomerGiftVoucherService customerGiftVoucherService) : base(httpContextAccessor)
         {
             this._customerGiftVoucherService = customerGiftVoucherService;
         }
@@ -36,6 +37,7 @@ namespace BeautyPro.CRM.Api.Controllers
         [Authorize]
         public ActionResult AddNewVoucher([FromBody]CustomerGiftVoucherDTO voucher)
         {
+            voucher.EnteredBy = UserId;
             return Ok(_customerGiftVoucherService.AddNewVoucher(voucher));
         }
 

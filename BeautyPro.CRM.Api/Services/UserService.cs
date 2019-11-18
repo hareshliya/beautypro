@@ -48,7 +48,8 @@ namespace BeautyPro.CRM.Api.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Role, user.UserType)
+                    new Claim(ClaimTypes.Role, user.UserType),
+                    new Claim(ClaimConstants.BARNCH_ID, user.BranchId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

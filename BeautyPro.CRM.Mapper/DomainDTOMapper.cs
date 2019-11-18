@@ -1,4 +1,5 @@
 ﻿using BeautyPro.CRM.Contract.DTO;
+using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.DomainModel;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,11 @@ namespace BeautyPro.CRM.Mapper
         public static EmployeeDetail ToEmployeeDetailDomain(EmployeeDetailDTO employeeDetail)
         {
             return AutoMapper.Mapper.Map<EmployeeDetailDTO, EmployeeDetail>(employeeDetail);
+        }
+
+        public static IList<Schedule> ToSchedule(IEnumerable<CustomerScheduleTreatment> treatment)
+        {
+            return AutoMapper.Mapper.Map<IEnumerable<CustomerScheduleTreatment>, IList<Schedule>>(treatment);
         }
 
     }

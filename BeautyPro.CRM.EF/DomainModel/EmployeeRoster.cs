@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeautyPro.CRM.EF.DomainModel
 {
-    public partial class TblEmployeeRoster
+    [Table("Tbl_Mast_Department")]
+    public partial class EmployeeRoster
     {
         public int RosterId { get; set; }
         public int Empno { get; set; }
