@@ -46,7 +46,7 @@ namespace BeautyProCRM.Business
             var customerSchedule = new CustomerSchedule()
             {
                 CustomerId = request.CustomerId,
-                BookedDate = DateTime.Now,
+                BookedDate = request.BookedDate,
                 Status = NEW,
                 DepartmentId = request.DepartmentId,
                 BranchId = request.BranchId,
