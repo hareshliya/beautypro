@@ -34,9 +34,9 @@ namespace BeautyProCRM.Business
                 {
                     Ttid = treatment.Ttid,
                     Empno = treatment.EmpNo,
-                    StartTime = treatment.StartTime.TimeOfDay,
-                    EndTime = treatment.StartTime.AddMinutes(treatment.Duration).TimeOfDay
-                });
+                    StartTime = treatment.StartTime,
+                    EndTime = treatment.EndTime
+                }); ;
             }
 
             var customerSchedule = new CustomerSchedule()
