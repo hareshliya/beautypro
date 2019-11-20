@@ -6,14 +6,14 @@ namespace BeautyPro.CRM.Contract.DTO.UI
 {
     public class SchedulersResponse
     {
-        public string Therapist { get; set; }
+        public string EmployeeName { get; set; }
         public string Designation { get; set; }
         public IEnumerable<Schedule> Schedules { get; set; }
     }
 
     public class Schedule
     {
-        public string Client { get; set; }
+        public string ClientName { get; set; }
         public string ScheduleStatus { get; set; }
         public string TreatmentType { get; set; }
         public TimeSpan StartTime { get; set; }

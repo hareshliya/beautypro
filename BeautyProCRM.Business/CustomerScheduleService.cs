@@ -80,7 +80,9 @@ namespace BeautyProCRM.Business
                 .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
                 .Include(c => c.Employee).ThenInclude(c => c.Designation)
                 // .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
-                .Where(x => x.CustomerSchedule.BranchId == request.BranchId && x.CustomerSchedule.DepartmentId == request.DepartmentId && x.CustomerSchedule.Status == "New")
+                .Where(x => x.CustomerSchedule.BranchId == request.BranchId && 
+                (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0) 
+                && x.CustomerSchedule.Status == "New")
                 .Select(v => new { 
                 Therapist = v.Employee.Name,
                 Designation = v.Employee.Designation.Name,
@@ -89,7 +91,7 @@ namespace BeautyProCRM.Business
 
             return result.GroupBy(p => new { p.Therapist, p.Designation }, p => p.Schedules, (key, g) => new SchedulersResponse()
             {
-                Therapist = key.Therapist,
+                EmployeeName = key.Therapist,
                 Designation = key.Designation,
                 Schedules = DomainDTOMapper.ToSchedule(g)
             }).ToList();

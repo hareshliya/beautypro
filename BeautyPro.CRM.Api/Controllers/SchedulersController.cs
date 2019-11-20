@@ -22,6 +22,7 @@ namespace BeautyPro.CRM.Api.Controllers
             _customerScheduleService = customerScheduleService;
         }
 
+        [HttpGet("filter")]
         [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
         [Authorize]
         public IActionResult GetShedules([FromQuery]ScheduleRequest request)
