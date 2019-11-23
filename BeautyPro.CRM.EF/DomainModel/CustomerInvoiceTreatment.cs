@@ -13,6 +13,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public int Empno { get; set; }
         public decimal Cost { get; set; }
         public decimal Price { get; set; }
+        public int Qty { get; set; }
         public int Cstid { get; set; }
         public decimal SubTotalAmount { get; set; }
         public decimal DiscountAmount { get; set; }
