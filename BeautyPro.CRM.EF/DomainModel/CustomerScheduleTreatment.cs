@@ -9,7 +9,7 @@ namespace BeautyPro.CRM.EF.DomainModel
     {
         public CustomerScheduleTreatment()
         {
-            TblCustomerInvoiceHeader = new HashSet<TblCustomerInvoiceHeader>();
+            TblCustomerInvoiceHeader = new HashSet<CustomerInvoiceHeader>();
         }
 
         public int Cstid { get; set; }
@@ -22,6 +22,6 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual CustomerSchedule CustomerSchedule { get; set; }
         public virtual EmployeeDetail Employee { get; set; }
         public virtual TreatmentType Tt { get; set; }
-        public virtual ICollection<TblCustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
+        public virtual ICollection<CustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
     }
 }

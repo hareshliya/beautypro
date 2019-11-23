@@ -9,7 +9,7 @@ namespace BeautyPro.CRM.EF.DomainModel
     {
         public EmployeeDetail()
         {
-            TblCustomerInvoiceTreatment = new HashSet<TblCustomerInvoiceTreatment>();
+            TblCustomerInvoiceTreatment = new HashSet<CustomerInvoiceTreatment>();
             TblCustomerScheduleTreatment = new HashSet<CustomerScheduleTreatment>();
             TblEmployeeAllowances = new HashSet<TblEmployeeAllowances>();
             TblEmployeeBasicSalary = new HashSet<TblEmployeeBasicSalary>();
@@ -52,7 +52,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual Department Department { get; set; }
         public virtual TblMastDesignation Designation { get; set; }
         public virtual TblMastNationality Nationality { get; set; }
-        public virtual ICollection<TblCustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
+        public virtual ICollection<CustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
         public virtual ICollection<CustomerScheduleTreatment> TblCustomerScheduleTreatment { get; set; }
         public virtual ICollection<TblEmployeeAllowances> TblEmployeeAllowances { get; set; }
         public virtual ICollection<TblEmployeeBasicSalary> TblEmployeeBasicSalary { get; set; }

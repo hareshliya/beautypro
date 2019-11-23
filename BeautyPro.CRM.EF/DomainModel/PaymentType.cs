@@ -10,7 +10,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public PaymentType()
         {
             TblCustomerGiftVoucher = new HashSet<CustomerGiftVoucher>();
-            TblCustomerInvoiceHeader = new HashSet<TblCustomerInvoiceHeader>();
+            TblCustomerInvoiceHeader = new HashSet<CustomerInvoiceHeader>();
         }
 
         public int Ptid { get; set; }
@@ -24,6 +24,6 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime? DeletedDate { get; set; }
 
         public virtual ICollection<CustomerGiftVoucher> TblCustomerGiftVoucher { get; set; }
-        public virtual ICollection<TblCustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
+        public virtual ICollection<CustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
     }
 }

@@ -20,9 +20,9 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual DbSet<TblConfig> TblConfig { get; set; }
         public virtual DbSet<Customer> TblCustomer { get; set; }
         public virtual DbSet<CustomerGiftVoucher> TblCustomerGiftVoucher { get; set; }
-        public virtual DbSet<TblCustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
-        public virtual DbSet<TblCustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
-        public virtual DbSet<TblCustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
+        public virtual DbSet<CustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
+        public virtual DbSet<CustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
+        public virtual DbSet<CustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
         public virtual DbSet<CustomerSchedule> TblCustomerSchedule { get; set; }
         public virtual DbSet<CustomerScheduleTreatment> TblCustomerScheduleTreatment { get; set; }
         public virtual DbSet<TblEmployeeAllowances> TblEmployeeAllowances { get; set; }
@@ -75,7 +75,7 @@ namespace BeautyPro.CRM.EF.DomainModel
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-I5O0JTM\\SQLEXPRESS;Database=BeautyPro_COCO;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=BeautyPro_COCO;Trusted_Connection=True;");
             }
         }
 
@@ -277,7 +277,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Mast_TreatmentType");
             });
 
-            modelBuilder.Entity<TblCustomerInvoiceHeader>(entity =>
+            modelBuilder.Entity<CustomerInvoiceHeader>(entity =>
             {
                 entity.HasKey(e => e.InvoiceNo);
 
@@ -294,7 +294,7 @@ namespace BeautyPro.CRM.EF.DomainModel
 
                 entity.Property(e => e.CanceledDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Cstid).HasColumnName("CSTId");
+                //entity.Property(e => e.Cstid).HasColumnName("CSTId");
 
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
@@ -327,11 +327,11 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Cst)
-                    .WithMany(p => p.TblCustomerInvoiceHeader)
-                    .HasForeignKey(d => d.Cstid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_CustomerScheduleTreatment");
+                //entity.HasOne(d => d.Cst)
+                //    .WithMany(p => p.TblCustomerInvoiceHeader)
+                //    .HasForeignKey(d => d.Cstid)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_CustomerScheduleTreatment");
 
                 entity.HasOne(d => d.Department)
                     .WithMany(p => p.TblCustomerInvoiceHeader)
@@ -346,7 +346,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_PaymentType");
             });
 
-            modelBuilder.Entity<TblCustomerInvoiceProducts>(entity =>
+            modelBuilder.Entity<CustomerInvoiceProducts>(entity =>
             {
                 entity.HasKey(e => e.Cipid);
 
@@ -379,7 +379,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_CustomerInvoiceProducts_Tbl_CustomerInvoiceHeader");
             });
 
-            modelBuilder.Entity<TblCustomerInvoiceTreatment>(entity =>
+            modelBuilder.Entity<CustomerInvoiceTreatment>(entity =>
             {
                 entity.HasKey(e => e.Citid);
 

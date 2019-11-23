@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeautyPro.CRM.EF.DomainModel
 {
-    public partial class TblCustomerInvoiceHeader
+    [Table("Tbl_CustomerInvoiceHeader")]
+    public partial class CustomerInvoiceHeader
     {
-        public TblCustomerInvoiceHeader()
+        public CustomerInvoiceHeader()
         {
-            TblCustomerInvoiceProducts = new HashSet<TblCustomerInvoiceProducts>();
-            TblCustomerInvoiceTreatment = new HashSet<TblCustomerInvoiceTreatment>();
+            TblCustomerInvoiceProducts = new HashSet<CustomerInvoiceProducts>();
+            TblCustomerInvoiceTreatment = new HashSet<CustomerInvoiceTreatment>();
         }
 
         public string InvoiceNo { get; set; }
         public string CustomerId { get; set; }
         public DateTime InvDateTime { get; set; }
-        public int Cstid { get; set; }
+        //public int Cstid { get; set; }
         public int BranchId { get; set; }
         public string TransType { get; set; }
         public int Ptid { get; set; }
@@ -26,6 +28,8 @@ namespace BeautyPro.CRM.EF.DomainModel
         public string GvinvoiceNo { get; set; }
         public bool IsCanceled { get; set; }
         public string CancelReason { get; set; }
+        public bool? IsAmended { get; set; }
+        public string AmendedReason { get; set; }
         public int EnteredBy { get; set; }
         public int? ModifiedBy { get; set; }
         public int? CanceledBy { get; set; }
@@ -33,10 +37,10 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime? ModifiedDate { get; set; }
         public DateTime? CanceledDate { get; set; }
 
-        public virtual CustomerScheduleTreatment Cst { get; set; }
+        // public virtual CustomerScheduleTreatment Cst { get; set; }
         public virtual Department Department { get; set; }
         public virtual PaymentType Pt { get; set; }
-        public virtual ICollection<TblCustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
-        public virtual ICollection<TblCustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
+        public virtual ICollection<CustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
+        public virtual ICollection<CustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
     }
 }

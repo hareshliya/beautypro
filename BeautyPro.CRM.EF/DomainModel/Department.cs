@@ -10,7 +10,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public Department()
         {
             TblCustomerGiftVoucher = new HashSet<CustomerGiftVoucher>();
-            TblCustomerInvoiceHeader = new HashSet<TblCustomerInvoiceHeader>();
+            TblCustomerInvoiceHeader = new HashSet<CustomerInvoiceHeader>();
             TblCustomerSchedule = new HashSet<CustomerSchedule>();
             EmployeeDetail = new HashSet<EmployeeDetail>();
             TreatmentTypes = new HashSet<TreatmentType>();
@@ -31,7 +31,7 @@ namespace BeautyPro.CRM.EF.DomainModel
 
         public virtual Branch Branch { get; set; }
         public virtual ICollection<CustomerGiftVoucher> TblCustomerGiftVoucher { get; set; }
-        public virtual ICollection<TblCustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
+        public virtual ICollection<CustomerInvoiceHeader> TblCustomerInvoiceHeader { get; set; }
         public virtual ICollection<CustomerSchedule> TblCustomerSchedule { get; set; }
         public virtual ICollection<EmployeeDetail> EmployeeDetail { get; set; }
         public virtual ICollection<TreatmentType> TreatmentTypes { get; set; }
