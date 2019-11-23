@@ -64,6 +64,8 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual DbSet<TblRptTempProductSaleIncomeMonthBase> TblRptTempProductSaleIncomeMonthBase { get; set; }
         public virtual DbSet<TblSystemAutoNo> TblSystemAutoNo { get; set; }
         public virtual DbSet<User> TblUser { get; set; }
+        public virtual DbSet<CreditCardType> CreditCardTypes { get; set; }
+        public virtual DbSet<DiscountType> DiscountTypes { get; set; }
 
         // Unable to generate entity type for table 'dbo.Tbl_Rpt_TempCurrentStock'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.Tbl_Rpt_TempProductMovement'. Please see the warning messages.
@@ -344,6 +346,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasForeignKey(d => d.Ptid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_PaymentType");
+
             });
 
             modelBuilder.Entity<CustomerInvoiceProducts>(entity =>
@@ -353,8 +356,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.ToTable("Tbl_CustomerInvoiceProducts");
 
                 entity.Property(e => e.Cipid)
-                    .HasColumnName("CIPId")
-                    .ValueGeneratedNever();
+                    .HasColumnName("CIPId");
 
                 entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
 
@@ -373,7 +375,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.Property(e => e.Qty).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.InvoiceNoNavigation)
-                    .WithMany(p => p.TblCustomerInvoiceProducts)
+                    .WithMany(p => p.CustomerInvoiceProducts)
                     .HasForeignKey(d => d.InvoiceNo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerInvoiceProducts_Tbl_CustomerInvoiceHeader");
@@ -386,8 +388,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.ToTable("Tbl_CustomerInvoiceTreatment");
 
                 entity.Property(e => e.Citid)
-                    .HasColumnName("CITId")
-                    .ValueGeneratedNever();
+                    .HasColumnName("CITId");
 
                 entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
 
@@ -409,7 +410,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_EmployeeDetail");
 
                 entity.HasOne(d => d.InvoiceNoNavigation)
-                    .WithMany(p => p.TblCustomerInvoiceTreatment)
+                    .WithMany(p => p.CustomerInvoiceTreatment)
                     .HasForeignKey(d => d.InvoiceNo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_CustomerInvoiceHeader");

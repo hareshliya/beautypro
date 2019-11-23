@@ -87,6 +87,8 @@ namespace BeautyPro.CRM.Api
             services.AddScoped<ICustomerScheduleRepository, CustomerScheduleRepository>();
             services.AddScoped<ICustomerScheduleService, CustomerScheduleService>();
             services.AddScoped<IPaymentTypeRepository, PaymentTypeRepository>();
+            services.AddScoped<ICustomerInvoiceHeaderRepository, CustomerInvoiceHeaderRepository>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

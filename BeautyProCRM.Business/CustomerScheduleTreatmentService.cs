@@ -1,5 +1,6 @@
 ﻿using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.Interfaces;
+using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -44,6 +45,22 @@ namespace BeautyProCRM.Business
             }
 
             return appointments;
+        }
+
+        public List<InvoiceTreatmentResponse> GetInvoiceableScheduledTreatments(InvoiceTreatmentRequest request)
+        {
+            var treatments = _customerScheduleTreatmentRepository
+                            .All
+                            .Include(c => c.CustomerSchedule)
+                            .Include(c => c.Employee)
+                            .Include(c => c.Tt)
+                            //.Where(x => x.CustomerSchedule.CustomerId == request.CustomerId 
+                            //    && x.CustomerSchedule.Status == "Confirmed"
+                            //    && x.CustomerSchedule.BookedDate == DateTime.Now)
+                             .Where(x => x.CustomerSchedule.CustomerId == request.CustomerId && x.CustomerSchedule.Status == "New") // TODO: to be Remove
+                            .ToList();
+
+            return DomainDTOMapper.ToInvoiceTreatmentResponse(treatments);
         }
     }
 }

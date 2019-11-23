@@ -9,17 +9,17 @@ namespace BeautyPro.CRM.EF.DomainModel
     {
         public CustomerInvoiceHeader()
         {
-            TblCustomerInvoiceProducts = new HashSet<CustomerInvoiceProducts>();
-            TblCustomerInvoiceTreatment = new HashSet<CustomerInvoiceTreatment>();
+            CustomerInvoiceProducts = new HashSet<CustomerInvoiceProducts>();
+            CustomerInvoiceTreatment = new HashSet<CustomerInvoiceTreatment>();
         }
 
         public string InvoiceNo { get; set; }
         public string CustomerId { get; set; }
         public DateTime InvDateTime { get; set; }
-        //public int Cstid { get; set; }
         public int BranchId { get; set; }
         public string TransType { get; set; }
         public int Ptid { get; set; }
+        public int? CCTId { get; set; }
         public decimal SubTotalAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal TaxAmount { get; set; }
@@ -37,10 +37,10 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime? ModifiedDate { get; set; }
         public DateTime? CanceledDate { get; set; }
 
-        // public virtual CustomerScheduleTreatment Cst { get; set; }
         public virtual Department Department { get; set; }
         public virtual PaymentType Pt { get; set; }
-        public virtual ICollection<CustomerInvoiceProducts> TblCustomerInvoiceProducts { get; set; }
-        public virtual ICollection<CustomerInvoiceTreatment> TblCustomerInvoiceTreatment { get; set; }
+        public virtual CreditCardType CreditCardType { get; set; }
+        public virtual ICollection<CustomerInvoiceProducts> CustomerInvoiceProducts { get; set; }
+        public virtual ICollection<CustomerInvoiceTreatment> CustomerInvoiceTreatment { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace BeautyProCRM.Business.Interfaces
     public interface ICustomerScheduleTreatmentService
     {
         List<AppointmentListResponse> GetFilteredAppointments(AppointmentFilterRequest request);
+        List<InvoiceTreatmentResponse> GetInvoiceableScheduledTreatments(InvoiceTreatmentRequest request);
     }
 }

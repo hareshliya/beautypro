@@ -79,5 +79,10 @@ namespace BeautyPro.CRM.Mapper
             return AutoMapper.Mapper.Map<IEnumerable<CustomerScheduleTreatment>, IList<Schedule>>(treatment);
         }
 
+        public static List<InvoiceTreatmentResponse> ToInvoiceTreatmentResponse(List<CustomerScheduleTreatment> schedules)
+        {
+            return AutoMapper.Mapper.Map<List<CustomerScheduleTreatment>, List<InvoiceTreatmentResponse>>(schedules);
+        }
+
     }
 }
