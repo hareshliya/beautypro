@@ -39,8 +39,9 @@ namespace BeautyProCRM.Business
                     Ttid = treatment.Ttid,
                     Empno = treatment.EmpNo,
                     StartTime = treatment.StartTime,
-                    EndTime = treatment.EndTime
-                }); ;
+                    EndTime = treatment.EndTime,
+                    Qty = treatment.Qty
+                });
             }
 
             var customerSchedule = new CustomerSchedule()

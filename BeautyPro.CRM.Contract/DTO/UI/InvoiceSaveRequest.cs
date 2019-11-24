@@ -18,7 +18,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public int TreatmentTypeId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public decimal Discount { get; set; }
+        // public decimal Discount { get; set; }
         public int EmployeeNo { get; set; }
     }
 

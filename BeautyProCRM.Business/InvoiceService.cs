@@ -22,7 +22,7 @@ namespace BeautyProCRM.Business
             try
             {
                 decimal treatmentsSubTotal = request.Treatments != null ? request.Treatments.Sum(c => c.Price * c.Quantity) : 0.0M;
-                decimal treatmentsDiscount = request.Treatments != null ? request.Treatments.Sum(c => c.Discount) : 0.0M;
+                decimal treatmentsDiscount = 0.0M;
                 decimal treatmentsTax = (treatmentsSubTotal - treatmentsDiscount) * 0.06M;
                 decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - treatmentsDiscount);
 
@@ -38,7 +38,7 @@ namespace BeautyProCRM.Business
                     foreach (var treatment in request.Treatments)
                     {
                         decimal subTotal = (treatment.Price * treatment.Quantity);
-                        decimal discount = treatment.Discount;
+                        decimal discount = 0.0M;
                         decimal tax = (subTotal - discount) * 0.06M;
 
                         invoiceableTreatments.Add(new CustomerInvoiceTreatment()
@@ -47,7 +47,7 @@ namespace BeautyProCRM.Business
                             Price = treatment.Price,
                             Cost = treatment.Price,
                             SubTotalAmount = subTotal,
-                            DiscountAmount = discount,
+                            //DiscountAmount = discount,
                             TaxAmount = tax,
                             DueAmount = tax + (subTotal - discount),
                             Ttid = treatment.TreatmentTypeId,
