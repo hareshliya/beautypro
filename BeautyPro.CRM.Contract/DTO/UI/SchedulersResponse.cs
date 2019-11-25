@@ -7,6 +7,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     public class SchedulersResponse
     {
         public string EmployeeName { get; set; }
+        public int EmpNo { get; set; }
         public string Designation { get; set; }
         public IEnumerable<Schedule> Schedules { get; set; }
     }

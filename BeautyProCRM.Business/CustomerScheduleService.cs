@@ -72,6 +72,32 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToEmployeeDetailDTOs(employees.ToList());
         }
 
+        //public IList<SchedulersResponse> GetShedules(ScheduleRequest request)
+        //{
+        //    var result = _customerScheduleTreatmentRepository
+        //        .All
+        //        .Include(c => c.CustomerSchedule).ThenInclude(x => x.Customer)
+        //        .Include(c => c.Tt)
+        //        .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
+        //        .Include(c => c.Employee).ThenInclude(c => c.Designation)
+        //        // .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+        //        .Where(x => x.CustomerSchedule.BranchId == request.BranchId && 
+        //        (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0) 
+        //        && x.CustomerSchedule.Status == "New")
+        //        .Select(v => new { 
+        //        Therapist = v.Employee.Name,
+        //        Designation = v.Employee.Designation.Name,
+        //        Schedules = v
+        //    }).ToList();
+
+        //    return result.GroupBy(p => new { p.Therapist, p.Designation }, p => p.Schedules, (key, g) => new SchedulersResponse()
+        //    {
+        //        EmployeeName = key.Therapist,
+        //        Designation = key.Designation,
+        //        Schedules = DomainDTOMapper.ToSchedule(g)
+        //    }).ToList();
+        //}
+
         public IList<SchedulersResponse> GetShedules(ScheduleRequest request)
         {
             var result = _customerScheduleTreatmentRepository
@@ -81,21 +107,46 @@ namespace BeautyProCRM.Business
                 .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
                 .Include(c => c.Employee).ThenInclude(c => c.Designation)
                 // .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
-                .Where(x => x.CustomerSchedule.BranchId == request.BranchId && 
-                (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0) 
+                .Where(x => x.CustomerSchedule.BranchId == request.BranchId &&
+                (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0)
                 && x.CustomerSchedule.Status == "New")
-                .Select(v => new { 
-                Therapist = v.Employee.Name,
-                Designation = v.Employee.Designation.Name,
-                Schedules = v
-            }).ToList();
+                .Select(v => new {
+                    EmpNo = v.Employee.Empno,
+                    Therapist = v.Employee.Name,
+                    Designation = v.Employee.Designation.Name,
+                    Schedules = v
+                }).ToList();
 
-            return result.GroupBy(p => new { p.Therapist, p.Designation }, p => p.Schedules, (key, g) => new SchedulersResponse()
+            var allEmployees = _employeeDetailRepository.All
+                .Include(c => c.EmployeeRosters)
+                .Where(x => x.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+                .Select(c => new SchedulersResponse()
+                {
+                    EmpNo = c.Empno,
+                    Designation = c.Designation.Name,
+                    EmployeeName = c.Name,
+                });
+
+            var employeesWithSchedules = result.GroupBy(p => new { p.Therapist, p.Designation, p.EmpNo }, p => p.Schedules, (key, g) => new SchedulersResponse()
             {
+                EmpNo = key.EmpNo,
                 EmployeeName = key.Therapist,
                 Designation = key.Designation,
                 Schedules = DomainDTOMapper.ToSchedule(g)
             }).ToList();
+
+            var tempEmployeesWithSchedules = employeesWithSchedules;
+
+            foreach (var emp in allEmployees)
+            {
+                if (tempEmployeesWithSchedules.Any(c => c.EmpNo != emp.EmpNo))
+                {
+                    employeesWithSchedules.Add(emp);
+                }
+            }
+
+            return employeesWithSchedules;
         }
+
     }
 }
