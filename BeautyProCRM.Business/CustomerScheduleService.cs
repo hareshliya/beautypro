@@ -106,8 +106,8 @@ namespace BeautyProCRM.Business
                 .Include(c => c.Tt)
                 .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
                 .Include(c => c.Employee).ThenInclude(c => c.Designation)
-                // .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
-                .Where(x => x.CustomerSchedule.BranchId == request.BranchId &&
+                .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+                .Where(x => x.CustomerSchedule.BranchId == request.BranchId && x.CustomerSchedule.BookedDate == request.WorkingDate &&
                 (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0)
                 && x.CustomerSchedule.Status == "New")
                 .Select(v => new {
@@ -119,13 +119,13 @@ namespace BeautyProCRM.Business
 
             var allEmployees = _employeeDetailRepository.All
                 .Include(c => c.EmployeeRosters)
-                .Where(x => x.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+                .Where(x => x.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate) && (x.DepartmentId == request.DepartmentId || request.DepartmentId == 0))
                 .Select(c => new SchedulersResponse()
                 {
                     EmpNo = c.Empno,
                     Designation = c.Designation.Name,
                     EmployeeName = c.Name,
-                });
+                }).ToList();
 
             var employeesWithSchedules = result.GroupBy(p => new { p.Therapist, p.Designation, p.EmpNo }, p => p.Schedules, (key, g) => new SchedulersResponse()
             {
@@ -135,11 +135,16 @@ namespace BeautyProCRM.Business
                 Schedules = DomainDTOMapper.ToSchedule(g)
             }).ToList();
 
+            if (employeesWithSchedules.Count == 0)
+            {
+                return allEmployees;
+            }
+
             var tempEmployeesWithSchedules = employeesWithSchedules;
 
             foreach (var emp in allEmployees)
             {
-                if (tempEmployeesWithSchedules.Any(c => c.EmpNo != emp.EmpNo))
+                if (tempEmployeesWithSchedules.FirstOrDefault(c => c.EmpNo != emp.EmpNo) == null)
                 {
                     employeesWithSchedules.Add(emp);
                 }
