@@ -41,7 +41,7 @@ namespace BeautyProCRM.Business
         {
             if (!string.IsNullOrWhiteSpace(request.CustomerId))
             {
-                EditCustomer(request, userId);
+                EditCustomer(request, userId, branchId);
             }
             else
             {
@@ -56,21 +56,21 @@ namespace BeautyProCRM.Business
             _customerRepository.Add(DomainDTOMapper.ToCustomerDomain(new CustomerDTO()
             {
                 CustomerId = customerNo,
-                Address = request.Address,
                 FullName = request.Name,
+                Address = request.Address,
                 Gender = request.Gender,
-                EnteredDate = DateTime.Now,
                 LoyaltyCardNo = request.LoyaltyCardNo,
                 Email = request.Email,
                 MobileNo = request.ContactNo,
-                EnteredBy = userId,
-                BranchId = branchId
+                BranchId = branchId,
+                EnteredDate = DateTime.Now,
+                EnteredBy = userId
             }));
 
             _customerRepository.SaveChanges();
         }
 
-        private void EditCustomer(NewCustomerRequest request, int userId)
+        private void EditCustomer(NewCustomerRequest request, int userId, int branchId)
         {
             var customer = _customerRepository.FirstOrDefault(x => x.CustomerId == request.CustomerId);
 
@@ -82,6 +82,7 @@ namespace BeautyProCRM.Business
                 customer.Email = request.Email;
                 customer.Gender = request.Gender;
                 customer.LoyaltyCardNo = request.LoyaltyCardNo;
+                customer.BranchId = branchId;
                 customer.ModifiedBy = userId;
                 customer.ModifiedDate = DateTime.Now;
             }
@@ -96,7 +97,9 @@ namespace BeautyProCRM.Business
 
             if(customer != null)
             {
-                _customerRepository.Remove(customer);
+                customer.DeletedBy = userId;
+                customer.DeletedDate = DateTime.Now;
+                
                 _customerRepository.SaveChanges();
             }       
         }

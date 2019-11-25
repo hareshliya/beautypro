@@ -10,7 +10,7 @@ namespace BeautyProCRM.Business.Interfaces
     {
         List<TreatmentTypeDTO> GetTreatmentsForEmployee(TreatmentRequest request);
         List<DepartmentDTO> GetDepartments();
-        TreatmentTypeDTO AddNewTreatment(TreatmentTypeDTO treatment);
+        void AddEditTreatment(TreatmentTypeDTO request, int userId, int branchId);
         List<TreatmentTypeDTO> GetFilteredTreatments(TreatmentFilterRequest request);
         void DeleteTreatment(int treatmentTypeId, int deletedBy);
     }

@@ -6,6 +6,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
 {
     public class NewAppointmentRequest
     {
+        public int CsId { get; set; }
         public string CustomerId { get; set; }
         public DateTime BookedDate { get; set; }
         public string Status { get; set; }

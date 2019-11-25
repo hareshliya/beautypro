@@ -56,14 +56,46 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToDepartmentDTOs(departments);
         }
 
-        public TreatmentTypeDTO AddNewTreatment(TreatmentTypeDTO treatment)
+        public void AddEditTreatment(TreatmentTypeDTO request, int userId, int branchId)
         {
-            treatment.BranchId = treatment.BranchId;
+            if (request.Ttid != 0)
+            {
+                EditTreatment(request, userId, branchId);
+            }
+            else
+            {
+                AddTreatment(request, userId, branchId);
+            }
+        }
+
+        private void AddTreatment(TreatmentTypeDTO treatment, int userId, int branchId)
+        {
+            treatment.EnteredBy = userId;
+            treatment.BranchId = branchId;
             treatment.EnteredDate = DateTime.Now;
+
             _treatmentTypeRepository.Add(DomainDTOMapper.ToTreatmentTypeDomain(treatment));
             _treatmentTypeRepository.SaveChanges();
+        }
 
-            return treatment;
+        private void EditTreatment(TreatmentTypeDTO request, int userId, int branchId)
+        {
+            var treatment = _treatmentTypeRepository.FirstOrDefault(x => x.Ttid == request.Ttid);
+
+            if (treatment != null)
+            {
+                treatment.Ttid = request.Ttid;
+                treatment.Ttname = request.Ttname;
+                treatment.Duration = request.Duration;
+                treatment.Price = request.Price;
+                treatment.BranchId = branchId;
+                treatment.DepartmentId = request.DepartmentId;
+                treatment.Cost = request.Cost;
+                treatment.ModifiedBy = userId;
+                treatment.ModifiedDate = DateTime.Now;
+            }
+
+            _treatmentTypeRepository.SaveChanges();
         }
 
         public List<TreatmentTypeDTO> GetFilteredTreatments(TreatmentFilterRequest request)
@@ -91,7 +123,7 @@ namespace BeautyProCRM.Business
             {
                 treatment.DeletedBy = deletedBy;
                 treatment.DeletedDate = DateTime.Now;
-                _treatmentTypeRepository.Remove(treatment);
+
                 _treatmentTypeRepository.SaveChanges();
             }
 

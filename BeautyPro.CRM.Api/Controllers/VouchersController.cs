@@ -35,10 +35,32 @@ namespace BeautyPro.CRM.Api.Controllers
 
         [HttpPost("save")]
         [Authorize]
-        public ActionResult AddNewVoucher([FromBody]CustomerGiftVoucherDTO voucher)
+        public ActionResult AddEditVoucher([FromBody]CustomerGiftVoucherDTO request)
         {
-            voucher.EnteredBy = UserId;
-            return Ok(_customerGiftVoucherService.AddNewVoucher(voucher));
+            try
+            {
+                _customerGiftVoucherService.AddEditVoucher(request, UserId, BranchId);
+                return Ok(HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "SystemAdmin,GeneralManager")]
+        public IActionResult DeleteVoucher([FromQuery]VoucherDeleteRequest request)
+        {
+            try
+            {
+                _customerGiftVoucherService.DeleteVoucher(request, UserId);
+                return Ok(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("paymentTypes")]

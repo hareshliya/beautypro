@@ -51,11 +51,20 @@ namespace BeautyPro.CRM.Api.Controllers
 
         [HttpPost("save")]
         [Authorize(Roles = "SystemAdmin,GeneralManager")]
-        public IActionResult AddNewTreatment([FromBody]TreatmentTypeDTO treatment)
+        public IActionResult AddEditTreatment([FromBody]TreatmentTypeDTO request)
         {
-            treatment.BranchId = BranchId;
-            treatment.EnteredBy = UserId;
-            return Ok(_treatmentService.AddNewTreatment(treatment));
+            try
+            {
+                _treatmentService.AddEditTreatment(request, UserId, BranchId);
+                return Ok(HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            
+            
         }
 
         [HttpGet("filter")]

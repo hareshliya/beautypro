@@ -28,7 +28,21 @@ namespace BeautyProCRM.Business
             _customerScheduleTreatmentRepository = customerScheduleTreatmentRepository;
         }
 
-        public void AddNewAppointment(NewAppointmentRequest request)
+        public void AddEditAppointment(NewAppointmentRequest request, int userId, int branchId)
+        {
+            if (request.CsId != 0)
+            {
+                EditAppointment(request, userId, branchId);
+            }
+            else
+            {
+                AddAppointment(request, userId, branchId);
+            }
+
+            
+        }
+
+        private void AddAppointment(NewAppointmentRequest request, int userId, int branchId)
         {
             var treatments = new List<CustomerScheduleTreatment>();
 
@@ -58,6 +72,55 @@ namespace BeautyProCRM.Business
 
             _customerScheduleRepository.Add(customerSchedule);
             _customerScheduleRepository.SaveChanges();
+        }
+
+        private void EditAppointment(NewAppointmentRequest request, int userId, int branchId)
+        {
+            var schedule = _customerScheduleRepository.All.Where(x => x.Csid == request.CsId)
+                .Include(c => c.CustomerScheduleTreatments).FirstOrDefault();
+
+            if (schedule != null)
+            {
+                foreach (var treatment in schedule.CustomerScheduleTreatments)
+                {
+                    var updatedTreatment = request.Treatments.Where(c => c.Ttid == treatment.Ttid).FirstOrDefault();
+
+                    if (treatment != null && updatedTreatment != null)
+                    {
+                        treatment.Empno = updatedTreatment.EmpNo;
+                        treatment.StartTime = updatedTreatment.StartTime;
+                        treatment.EndTime = updatedTreatment.EndTime;
+                        treatment.Qty = updatedTreatment.Qty;
+                    }
+                }
+
+                schedule.BookedDate = request.BookedDate;
+                schedule.Status = request.Status;
+                schedule.BranchId = request.BranchId;
+                schedule.CustomerId = request.CustomerId;
+                schedule.BranchId = branchId;
+                schedule.DepartmentId = request.DepartmentId;
+                schedule.EnteredBy = userId;
+                schedule.EnteredDate = DateTime.Now;
+
+                _customerScheduleRepository.SaveChanges();
+            }
+            
+        }
+
+        public void DeleteAppointment(int csid, int userId)
+        {
+            var schedule = _customerScheduleRepository
+                .FirstOrDefault(x => x.Csid == csid);
+
+            if (schedule != null)
+            {
+                schedule.DeletedBy = userId;
+                schedule.DeletedDate = DateTime.Now;
+
+                _customerScheduleRepository.SaveChanges();
+            }
+
         }
 
         public List<EmployeeDetailDTO> GetFilteredEmployees(int departmentId)

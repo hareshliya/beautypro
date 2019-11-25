@@ -51,19 +51,64 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.ToList());
         }
 
-        public CustomerGiftVoucherDTO AddNewVoucher(CustomerGiftVoucherDTO voucher)
+        public void AddEditVoucher(CustomerGiftVoucherDTO request, int userId, int branchId)
+        {
+            if (!string.IsNullOrWhiteSpace(request.GvinvoiceNo))
+            {
+                EditVoucher(request, userId, branchId);
+            }
+            else
+            {
+                AddVoucher(request, userId, branchId);
+            }
+        }
+
+        private void AddVoucher(CustomerGiftVoucherDTO voucher, int userId, int branchId)
         {
             voucher.GvinvoiceNo = String.Format("V{0:d9}", (DateTime.Now.Ticks / 10) % 1000000000);
             voucher.EnteredDate = DateTime.Now;
-            voucher.EnteredBy = voucher.EnteredBy;
+            voucher.EnteredBy = userId;
             voucher.InvDateTime = DateTime.Now;
-            voucher.BranchId = 1;
+            voucher.BranchId = branchId;
             voucher.IsRedeem = false;
             voucher.IsCanceled = false;
 
             _customerGiftVoucherRepository.Add(DomainDTOMapper.ToCustomerGiftVoucherDomain(voucher));
             _customerGiftVoucherRepository.SaveChanges();
-            return voucher;
+        }
+
+        private void EditVoucher(CustomerGiftVoucherDTO request, int userId, int branchId)
+        {
+            var voucher = _customerGiftVoucherRepository.FirstOrDefault(x => x.GvinvoiceNo == request.GvinvoiceNo);
+
+            if (voucher != null)
+            {
+                voucher.BranchId = branchId;
+                voucher.CustomerId = request.CustomerId;
+                //voucher.DepartmentId = request.DepartmentId;
+                voucher.DueAmount = request.DueAmount;
+                //voucher.InvDateTime = request.InvDateTime;
+                voucher.ModifiedBy = userId;
+                voucher.ModifiedDate = DateTime.Now;
+            }
+
+            _customerGiftVoucherRepository.SaveChanges();
+        }
+
+        public void DeleteVoucher(VoucherDeleteRequest request, int userId)
+        {
+            var voucher = _customerGiftVoucherRepository
+                .FirstOrDefault(x => x.GvinvoiceNo == request.GvinvoiceNo);
+
+            if (voucher != null)
+            {
+                voucher.CanceledBy = userId;
+                voucher.CanceledDate = DateTime.Now;
+                voucher.CancelReason = request.CancelReason;
+
+                _customerGiftVoucherRepository.SaveChanges();
+            }
+
         }
 
         public List<PaymentTypeDTO> GetPaymentTypes()

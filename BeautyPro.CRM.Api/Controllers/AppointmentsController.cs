@@ -39,14 +39,27 @@ namespace BeautyPro.CRM.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
-        public IActionResult AddNewAppointment([FromBody]NewAppointmentRequest request)
+        public IActionResult AddEditAppointment([FromBody]NewAppointmentRequest request)
         {
             try
             {
-                request.BranchId = BranchId;
-                request.EnteredBy = UserId;
-                _customerScheduleService.AddNewAppointment(request);
+                _customerScheduleService.AddEditAppointment(request, UserId, BranchId);
                 return Ok(HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "SystemAdmin,GeneralManager")]
+        public IActionResult DeleteAppointment([FromQuery] int csid)
+        {
+            try
+            {
+                _customerScheduleService.DeleteAppointment(csid, UserId);
+                return Ok(HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {

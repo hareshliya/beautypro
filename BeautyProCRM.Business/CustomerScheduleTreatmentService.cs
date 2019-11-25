@@ -29,6 +29,7 @@ namespace BeautyProCRM.Business
                 .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null)
                 .Select(c => new AppointmentListResponse()
                 {
+                    CsId = c.Csid,
                     Client = c.CustomerSchedule.Customer.FullName,
                     Date = c.CustomerSchedule.BookedDate,
                     Duration = c.EndTime - c.StartTime,
