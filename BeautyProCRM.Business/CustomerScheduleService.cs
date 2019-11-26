@@ -3,6 +3,7 @@ using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
+using BeautyProCRM.Business.Constants;
 using BeautyProCRM.Business.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,7 +18,7 @@ namespace BeautyProCRM.Business
         private readonly ICustomerScheduleRepository _customerScheduleRepository;
         private readonly IEmployeeDetailRepository _employeeDetailRepository;
         public readonly ICustomerScheduleTreatmentRepository _customerScheduleTreatmentRepository;
-        private const string NEW = "New";
+
 
         public CustomerScheduleService(ICustomerScheduleRepository customerScheduleRepository,
                                        IEmployeeDetailRepository employeeDetailRepository,
@@ -62,7 +63,7 @@ namespace BeautyProCRM.Business
             {
                 CustomerId = request.CustomerId,
                 BookedDate = request.BookedDate,
-                Status = NEW,
+                Status = AppoinmentConstant.PENDING,
                 DepartmentId = request.DepartmentId,
                 BranchId = request.BranchId,
                 EnteredBy = request.EnteredBy,
@@ -215,6 +216,21 @@ namespace BeautyProCRM.Business
             }
 
             return employeesWithSchedules;
+        }
+
+        public void UpdateAppoinmentStatus(AppoinmentStatusRequest request, int userId)
+        {
+            var schedule = _customerScheduleRepository.FirstOrDefault(x => x.Csid == request.CsId);
+
+            if (schedule != null)
+            {
+                schedule.Status = request.Status;
+                schedule.ModifiedDate = DateTime.Now;
+                schedule.ModifiedBy = userId;
+            }
+
+            _customerScheduleRepository.SaveChanges();
+
         }
 
     }

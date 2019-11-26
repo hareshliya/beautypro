@@ -11,7 +11,7 @@ namespace BeautyProCRM.Business.Interfaces
         void AddEditAppointment(NewAppointmentRequest request, int userId, int branchId);
         List<EmployeeDetailDTO> GetFilteredEmployees(int departmentId);
         IList<SchedulersResponse> GetShedules(ScheduleRequest request);
-
         void DeleteAppointment(int csid, int userId);
+        void UpdateAppoinmentStatus(AppoinmentStatusRequest request, int userId);
     }
 }

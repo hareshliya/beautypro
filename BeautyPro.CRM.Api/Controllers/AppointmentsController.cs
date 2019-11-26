@@ -75,5 +75,20 @@ namespace BeautyPro.CRM.Api.Controllers
             return Ok(_customerScheduleService.GetFilteredEmployees(departmentId));
         }
 
+        [HttpPost("status")]
+        //[Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
+        public IActionResult UpdateAppoinmentStatus([FromBody]AppoinmentStatusRequest request)
+        {
+            try
+            {
+                _customerScheduleService.UpdateAppoinmentStatus(request, UserId);
+                return Ok(HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
     }
 }
