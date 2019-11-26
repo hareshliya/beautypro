@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace BeautyPro.CRM.EF.DomainModel
+namespace BeautyPro.CRM.Contract.DTO
 {
-    public partial class TblProduct
+    public class ProductDTO
     {
         public string ItemId { get; set; }
         public string ItemName { get; set; }

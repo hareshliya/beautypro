@@ -67,7 +67,7 @@ namespace BeautyPro.CRM.Api
             });
 
             //var connection = @"Server=.;Database=BeautyPro_COCO;Trusted_Connection=True;";
-            var connection = @"Server=DESKTOP-I5O0JTM\SQLEXPRESS;Database=BeautyPro_COCO;Trusted_Connection=True;";
+            var connection = @"Server=.;Database=BeautyPro_COCO;Trusted_Connection=True;";
             services.AddDbContext<BeautyProContext>(opt => opt.UseSqlServer(connection));
 
             services.AddMvc(opt => opt.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -90,6 +90,8 @@ namespace BeautyPro.CRM.Api
             services.AddScoped<IPaymentTypeRepository, PaymentTypeRepository>();
             services.AddScoped<ICustomerInvoiceHeaderRepository, CustomerInvoiceHeaderRepository>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
