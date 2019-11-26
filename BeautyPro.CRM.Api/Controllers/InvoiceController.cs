@@ -25,7 +25,7 @@ namespace BeautyPro.CRM.Api.Controllers
             _invoiceService = invoiceService;
         }
 
-        [HttpGet]
+        [HttpGet("treatments")]
         public IActionResult GetCustomerInvoiceableTreatments([FromQuery]InvoiceTreatmentRequest request)
         {
             return Ok(_customerScheduleTreatmentService.GetInvoiceableScheduledTreatments(request));

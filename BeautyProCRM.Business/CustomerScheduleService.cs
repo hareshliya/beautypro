@@ -208,7 +208,7 @@ namespace BeautyProCRM.Business
 
             foreach (var emp in allEmployees)
             {
-                if (tempEmployeesWithSchedules.FirstOrDefault(c => c.EmpNo != emp.EmpNo) == null)
+                if (!tempEmployeesWithSchedules.Any(c => c.EmpNo == emp.EmpNo))
                 {
                     employeesWithSchedules.Add(emp);
                 }
