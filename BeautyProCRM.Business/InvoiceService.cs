@@ -22,13 +22,12 @@ namespace BeautyProCRM.Business
             try
             {
                 decimal treatmentsSubTotal = request.Treatments != null ? request.Treatments.Sum(c => c.Price * c.Quantity) : 0.0M;
-                decimal treatmentsDiscount = 0.0M;
-                decimal treatmentsTax = (treatmentsSubTotal - treatmentsDiscount) * 0.06M;
-                decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - treatmentsDiscount);
+                decimal treatmentsTax = (treatmentsSubTotal - request.TreatmentDiscount) * 0.06M;
+                decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - request.TreatmentDiscount);
 
                 decimal productsSubTotal = request.Products != null ? request.Products.Sum(c => c.Price * c.Quantity) : 0.0M;
                 decimal productsTax = (productsSubTotal) * 0.06M;
-                decimal productsDueAmount = treatmentsTax + treatmentsSubTotal;
+                decimal productsDueAmount = productsTax + treatmentsSubTotal;
 
                 var invoiceableTreatments = new List<CustomerInvoiceTreatment>();
                 var invoiceableproducts = new List<CustomerInvoiceProducts>();
@@ -46,10 +45,6 @@ namespace BeautyProCRM.Business
                             Qty = treatment.Quantity,
                             Price = treatment.Price,
                             Cost = treatment.Price,
-                            SubTotalAmount = subTotal,
-                            //DiscountAmount = discount,
-                            TaxAmount = tax,
-                            DueAmount = tax + (subTotal - discount),
                             Ttid = treatment.TreatmentTypeId,
                             Empno = treatment.EmployeeNo,
                             Cstid = treatment.CustomerScheduleTreatmentId,
@@ -69,9 +64,6 @@ namespace BeautyProCRM.Business
                             Qty = product.Quantity,
                             Price = product.Price,
                             Cost = product.Price,
-                            SubTotalAmount = subTotal,
-                            TaxAmount = tax,
-                            DueAmount = tax + subTotal,
                             Empno = product.RecomendedBy,
                             ProductId = product.ProductId
                         });
@@ -83,23 +75,26 @@ namespace BeautyProCRM.Business
                 var invoiceHeader = new CustomerInvoiceHeader()
                 {
                     InvoiceNo = invoiceNo,
-                    //BranchId = branchId,
-                    //EnteredBy = userId,
-                    BranchId = 1,
-                    EnteredBy = 1,
+                    BranchId = branchId,
+                    EnteredBy = userId,
+                    //BranchId = 1,
+                    //EnteredBy = 1,
                     EnteredDate = DateTime.Now,
                     CustomerId = request.CustomerId,
                     InvDateTime = DateTime.Now,
                     TransType = "Cash",
                     Ptid = 1,
-                    SubTotalAmount = treatmentsSubTotal + productsSubTotal,
-                    DiscountAmount = treatmentsDiscount,
-                    TaxAmount = treatmentsTax + productsTax,
-                    DueAmount = treatmentsDueAmount + productsDueAmount,
                     DepartmentId = request.DepartmentId,
                     IsCanceled = false,
                     CustomerInvoiceProducts = invoiceableproducts,
-                    CustomerInvoiceTreatment = invoiceableTreatments
+                    CustomerInvoiceTreatment = invoiceableTreatments,
+                    TreatmentSubTotalAmount = treatmentsSubTotal,
+                    TreatmentDiscountAmount = request.TreatmentDiscount,
+                    TreatmentDueAmount = treatmentsDueAmount,
+                    TreatmentTaxAmount = treatmentsTax,
+                    ProductSubTotalAmount = productsSubTotal,
+                    ProductDueAmount = productsDueAmount,
+                    ProductTaxAmount = productsTax
                 };
 
                 _customerInvoiceHeaderRepository.Add(invoiceHeader);

@@ -20,10 +20,21 @@ namespace BeautyPro.CRM.EF.DomainModel
         public string TransType { get; set; }
         public int Ptid { get; set; }
         public int? CCTId { get; set; }
-        public decimal SubTotalAmount { get; set; }
-        public decimal DiscountAmount { get; set; }
-        public decimal TaxAmount { get; set; }
-        public decimal DueAmount { get; set; }
+
+        //public decimal SubTotalAmount { get; set; }
+        //public decimal DiscountAmount { get; set; }
+        //public decimal TaxAmount { get; set; }
+        //public decimal DueAmount { get; set; }
+
+        public decimal TreatmentSubTotalAmount { get; set; }
+        public decimal TreatmentDiscountAmount { get; set; }
+        public decimal TreatmentTaxAmount { get; set; }
+        public decimal TreatmentDueAmount { get; set; }
+
+        public decimal ProductSubTotalAmount { get; set; }
+        public decimal ProductTaxAmount { get; set; }
+        public decimal ProductDueAmount { get; set; }
+
         public int DepartmentId { get; set; }
         public string GvinvoiceNo { get; set; }
         public bool IsCanceled { get; set; }
