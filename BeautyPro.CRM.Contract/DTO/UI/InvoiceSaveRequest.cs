@@ -10,6 +10,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public int DepartmentId { get; set; }
         public List<InvoiceableTreatment> Treatments { get; set; }
         public List<InvoiceableProduct> Products { get; set; }
+        public decimal TreatmentDiscount { get; set; }
     }
 
     public class InvoiceableTreatment
@@ -18,7 +19,6 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public int TreatmentTypeId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        // public decimal Discount { get; set; }
         public int EmployeeNo { get; set; }
     }
 

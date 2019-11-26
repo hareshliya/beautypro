@@ -14,9 +14,9 @@ namespace BeautyPro.CRM.EF.DomainModel
         public decimal Price { get; set; }
         public decimal Cost { get; set; }
         public decimal Qty { get; set; }
-        public decimal SubTotalAmount { get; set; }
-        public decimal TaxAmount { get; set; }
-        public decimal DueAmount { get; set; }
+        //public decimal SubTotalAmount { get; set; }
+        //public decimal TaxAmount { get; set; }
+        //public decimal DueAmount { get; set; }
         public virtual EmployeeDetail EmpnoNavigation { get; set; }
         public virtual CustomerInvoiceHeader InvoiceNoNavigation { get; set; }
     }

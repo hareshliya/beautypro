@@ -304,9 +304,9 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+                //entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.DueAmount).HasColumnType("decimal(18, 2)");
+                //entity.Property(e => e.DueAmount).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.EnteredDate).HasColumnType("datetime");
 
@@ -321,9 +321,9 @@ namespace BeautyPro.CRM.EF.DomainModel
 
                 entity.Property(e => e.Ptid).HasColumnName("PTId");
 
-                entity.Property(e => e.SubTotalAmount).HasColumnType("decimal(18, 2)");
+                //entity.Property(e => e.SubTotalAmount).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+                //entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.TransType)
                     .IsRequired()
