@@ -76,7 +76,7 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [HttpPost("status")]
-        //[Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption")]
         public IActionResult UpdateAppoinmentStatus([FromBody]AppoinmentStatusRequest request)
         {
             try
