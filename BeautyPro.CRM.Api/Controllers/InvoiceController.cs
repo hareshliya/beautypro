@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +38,21 @@ namespace BeautyPro.CRM.Api.Controllers
             try
             {
                 _invoiceService.SaveInvoice(request, BranchId, UserId);
+                return Ok(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("invoice-discount")]
+        [Authorize(Roles = "SystemAdmin,GeneralManager")]
+        public IActionResult ApplyDiscount([FromBody]InvoiceDiscountRequest request)
+        {
+            try
+            {
+                _invoiceService.ApplyDiscount(request);
                 return Ok(HttpStatusCode.OK);
             }
             catch (Exception ex)

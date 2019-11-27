@@ -102,6 +102,7 @@ namespace BeautyProCRM.Business
         {
             var treatmentTypes = _treatmentTypeRepository
                 .All.Include(c => c.Department)
+                .Where(c => c.DeletedBy == null && c.DeletedDate == null)
                 .ToList();
 
             if (request.DepartmentId.HasValue && request.DepartmentId.Value != 0)

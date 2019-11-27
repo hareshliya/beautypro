@@ -22,12 +22,14 @@ namespace BeautyProCRM.Business
             try
             {
                 decimal treatmentsSubTotal = request.Treatments != null ? request.Treatments.Sum(c => c.Price * c.Quantity) : 0.0M;
-                decimal treatmentsTax = (treatmentsSubTotal - request.TreatmentDiscount) * 0.06M;
-                decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - request.TreatmentDiscount);
+                // decimal treatmentsTax = (treatmentsSubTotal - request.TreatmentDiscount) * 0.06M;
+                decimal treatmentsTax = treatmentsSubTotal * 0.06M;
+                //decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - request.TreatmentDiscount);
+                decimal treatmentsDueAmount = treatmentsTax + treatmentsSubTotal;
 
                 decimal productsSubTotal = request.Products != null ? request.Products.Sum(c => c.Price * c.Quantity) : 0.0M;
                 decimal productsTax = (productsSubTotal) * 0.06M;
-                decimal productsDueAmount = productsTax + treatmentsSubTotal;
+                decimal productsDueAmount = productsTax + productsSubTotal;
 
                 var invoiceableTreatments = new List<CustomerInvoiceTreatment>();
                 var invoiceableproducts = new List<CustomerInvoiceProducts>();
@@ -36,15 +38,11 @@ namespace BeautyProCRM.Business
                 {
                     foreach (var treatment in request.Treatments)
                     {
-                        decimal subTotal = (treatment.Price * treatment.Quantity);
-                        decimal discount = 0.0M;
-                        decimal tax = (subTotal - discount) * 0.06M;
-
                         invoiceableTreatments.Add(new CustomerInvoiceTreatment()
                         {
                             Qty = treatment.Quantity,
                             Price = treatment.Price,
-                            Cost = treatment.Price,
+                            Cost = treatment.Cost,
                             Ttid = treatment.TreatmentTypeId,
                             Empno = treatment.EmployeeNo,
                             Cstid = treatment.CustomerScheduleTreatmentId,
@@ -63,7 +61,7 @@ namespace BeautyProCRM.Business
                         {
                             Qty = product.Quantity,
                             Price = product.Price,
-                            Cost = product.Price,
+                            Cost = product.Cost,
                             Empno = product.RecomendedBy,
                             ProductId = product.ProductId
                         });
@@ -77,8 +75,6 @@ namespace BeautyProCRM.Business
                     InvoiceNo = invoiceNo,
                     BranchId = branchId,
                     EnteredBy = userId,
-                    //BranchId = 1,
-                    //EnteredBy = 1,
                     EnteredDate = DateTime.Now,
                     CustomerId = request.CustomerId,
                     InvDateTime = DateTime.Now,
@@ -89,12 +85,12 @@ namespace BeautyProCRM.Business
                     CustomerInvoiceProducts = invoiceableproducts,
                     CustomerInvoiceTreatment = invoiceableTreatments,
                     TreatmentSubTotalAmount = treatmentsSubTotal,
-                    TreatmentDiscountAmount = request.TreatmentDiscount,
                     TreatmentDueAmount = treatmentsDueAmount,
                     TreatmentTaxAmount = treatmentsTax,
                     ProductSubTotalAmount = productsSubTotal,
                     ProductDueAmount = productsDueAmount,
-                    ProductTaxAmount = productsTax
+                    ProductTaxAmount = productsTax,
+                    CCTId = request.CreditCardTypeId
                 };
 
                 _customerInvoiceHeaderRepository.Add(invoiceHeader);
@@ -104,6 +100,25 @@ namespace BeautyProCRM.Business
             {
                 throw;
             }
+        }
+
+        public void ApplyDiscount(InvoiceDiscountRequest request)
+        {
+            var invoiceHeader =
+                _customerInvoiceHeaderRepository
+                .FirstOrDefault(c => c.InvoiceNo == request.InvoiceNo);
+
+            if(invoiceHeader != null)
+            {
+                decimal newTax = (invoiceHeader.TreatmentSubTotalAmount - request.Discount) * 0.06M;
+                decimal newDueAmount = newTax + (invoiceHeader.TreatmentSubTotalAmount - request.Discount);
+
+                invoiceHeader.TreatmentDiscountAmount = request.Discount;
+                invoiceHeader.TreatmentTaxAmount = newTax;
+                invoiceHeader.TreatmentDueAmount = newDueAmount;
+
+                _customerInvoiceHeaderRepository.SaveChanges();
+            }         
         }
 
         private string GenerateInvoiceNo()
