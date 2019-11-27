@@ -94,7 +94,8 @@ namespace BeautyProCRM.Business
                     TreatmentTaxAmount = treatmentsTax,
                     ProductSubTotalAmount = productsSubTotal,
                     ProductDueAmount = productsDueAmount,
-                    ProductTaxAmount = productsTax
+                    ProductTaxAmount = productsTax,
+                    CCTId = request.CreditCardTypeId
                 };
 
                 _customerInvoiceHeaderRepository.Add(invoiceHeader);

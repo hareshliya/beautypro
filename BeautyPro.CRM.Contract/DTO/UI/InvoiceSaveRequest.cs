@@ -8,6 +8,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     {
         public string CustomerId { get; set; }
         public int DepartmentId { get; set; }
+        public int? CreditCardTypeId { get; set; }
         public List<InvoiceableTreatment> Treatments { get; set; }
         public List<InvoiceableProduct> Products { get; set; }
         public decimal TreatmentDiscount { get; set; }
