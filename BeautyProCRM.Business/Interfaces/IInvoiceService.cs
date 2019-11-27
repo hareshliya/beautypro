@@ -8,5 +8,6 @@ namespace BeautyProCRM.Business.Interfaces
     public interface IInvoiceService
     {
         void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId);
+        void ApplyDiscount(InvoiceDiscountRequest request);
     }
 }

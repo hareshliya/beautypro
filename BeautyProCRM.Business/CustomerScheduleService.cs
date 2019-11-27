@@ -101,8 +101,8 @@ namespace BeautyProCRM.Business
                 schedule.CustomerId = request.CustomerId;
                 schedule.BranchId = branchId;
                 schedule.DepartmentId = request.DepartmentId;
-                schedule.EnteredBy = userId;
-                schedule.EnteredDate = DateTime.Now;
+                schedule.ModifiedBy = userId;
+                schedule.ModifiedDate = DateTime.Now;
 
                 _customerScheduleRepository.SaveChanges();
             }
@@ -131,7 +131,8 @@ namespace BeautyProCRM.Business
 
             if (departmentId != 0)
             {
-                employees = employees.Where(x => x.DepartmentId == departmentId);
+                employees = employees
+                    .Where(x => x.DepartmentId == departmentId && x.DeletedBy == null && x.DeletedDate == null);
             }
             return DomainDTOMapper.ToEmployeeDetailDTOs(employees.ToList());
         }
@@ -185,6 +186,7 @@ namespace BeautyProCRM.Business
             var allEmployees = _employeeDetailRepository.All
                 .Include(c => c.EmployeeRosters)
                 .Where(x => x.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate) && (x.DepartmentId == request.DepartmentId || request.DepartmentId == 0))
+                .Where(c => c.DeletedBy == null && c.DeletedBy == null)
                 .Select(c => new SchedulersResponse()
                 {
                     EmpNo = c.Empno,
