@@ -173,7 +173,7 @@ namespace BeautyProCRM.Business
                 .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
                 .Where(x => x.CustomerSchedule.BranchId == request.BranchId && x.CustomerSchedule.BookedDate == request.WorkingDate &&
                 (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0)
-                && x.CustomerSchedule.Status == "New")
+                && x.CustomerSchedule.Status != AppoinmentConstant.CANCELLED)
                 .Where(c => c.CustomerSchedule.DeletedBy == null && c.CustomerSchedule.DeletedDate == null)
                 .Select(v => new {
                     EmpNo = v.Employee.Empno,
