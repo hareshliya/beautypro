@@ -58,7 +58,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual DbSet<TblProductPonheader> TblProductPonheader { get; set; }
         public virtual DbSet<TblProductReceptionGrndetail> TblProductReceptionGrndetail { get; set; }
         public virtual DbSet<TblProductReceptionGrnheader> TblProductReceptionGrnheader { get; set; }
-        public virtual DbSet<TblProductSellingPrice> TblProductSellingPrice { get; set; }
+        public virtual DbSet<ProductSellingPrice> TblProductSellingPrice { get; set; }
         public virtual DbSet<TblProductSrndetails> TblProductSrndetails { get; set; }
         public virtual DbSet<TblProductSrnheader> TblProductSrnheader { get; set; }
         public virtual DbSet<TblRptTempProductSaleIncomeMonthBase> TblRptTempProductSaleIncomeMonthBase { get; set; }
@@ -1441,7 +1441,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
-            modelBuilder.Entity<TblProductSellingPrice>(entity =>
+            modelBuilder.Entity<ProductSellingPrice>(entity =>
             {
                 entity.HasKey(e => e.ItemId)
                     .HasName("PK_ItemSellingPrice");

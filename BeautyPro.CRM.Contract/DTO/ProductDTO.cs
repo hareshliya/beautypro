@@ -15,6 +15,7 @@ namespace BeautyPro.CRM.Contract.DTO
         public decimal? LeadTime { get; set; }
         public decimal? ReOrderLevel { get; set; }
         public decimal? ReOrderQty { get; set; }
+        public decimal? SellingPrice { get; set; }
         public int? UnitId { get; set; }
         public decimal? LastPurchasePrice { get; set; }
         public int? BranchId { get; set; }

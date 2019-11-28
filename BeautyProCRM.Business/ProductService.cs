@@ -2,6 +2,7 @@
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,12 @@ namespace BeautyProCRM.Business
 
         public List<ProductDTO> GetAllProducts(int branchId)
         {
-            return DomainDTOMapper.ToProductDTOs(_productRepository.All
-                .Where(c => !c.IsDeleted && c.BranchId == branchId).ToList());
+            var products = _productRepository
+                .All
+                .Include(c => c.ProductSellingPrice)
+                .Where(c => !c.IsDeleted && c.BranchId == branchId).ToList();
+
+            return DomainDTOMapper.ToProductDTOs(products);
         }
     }
 }

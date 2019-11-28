@@ -21,5 +21,10 @@ namespace BeautyPro.CRM.EF.DomainModel
         public int? BranchId { get; set; }
         public bool IsDeleted { get; set; }
         public string Barcode { get; set; }
+
+        [ForeignKey("ProductSellingPrice")]
+        [Column(TypeName = "char(4)")]
+        public string ProductSellingPriceItemId { get; set; }
+        public virtual ProductSellingPrice ProductSellingPrice { get; set; }
     }
 }
