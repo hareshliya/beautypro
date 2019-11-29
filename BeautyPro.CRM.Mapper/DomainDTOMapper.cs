@@ -89,5 +89,9 @@ namespace BeautyPro.CRM.Mapper
             return AutoMapper.Mapper.Map<List<Product>, List<ProductDTO>>(products);
         }
 
+        public static List<AppointmentTreatment> TOAppointmentTreatment(ICollection<CustomerScheduleTreatment> treatments)
+        {
+            return AutoMapper.Mapper.Map<ICollection<CustomerScheduleTreatment>, List<AppointmentTreatment>>(treatments);
+        }
     }
 }

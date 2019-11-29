@@ -32,13 +32,16 @@ namespace BeautyProCRM.Business
                 {
                     CsId = c.Csid,
                     Client = c.CustomerSchedule.Customer.FullName,
+                    CustomerId = c.CustomerSchedule.CustomerId,
                     Date = c.CustomerSchedule.BookedDate,
                     Duration = c.EndTime - c.StartTime,
                     Price = c.Tt.Price,
                     Therapist = c.Employee.Name,
                     Time = c.StartTime,
                     Treatment = c.Tt.Ttname,
-                    departmentId = c.CustomerSchedule.DepartmentId
+                    departmentId = c.CustomerSchedule.DepartmentId,
+                    Status = c.CustomerSchedule.Status,
+                    Treatments = DomainDTOMapper.TOAppointmentTreatment(c.CustomerSchedule.CustomerScheduleTreatments)
                 }).ToList();
 
             if (request.DepartmentId.HasValue && request.DepartmentId.Value > 0)

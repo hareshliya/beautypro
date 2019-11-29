@@ -8,6 +8,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     {
         public int CsId { get; set; }
         public string Client { get; set; }
+        public string CustomerId { get; set; }
         public string Treatment { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
@@ -15,5 +16,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public string Therapist { get; set; }
         public decimal Price { get; set; }
         public int departmentId { get; set; }
+        public string Status { get; set; }
+        public List<AppointmentTreatment> Treatments { get; set; }
     }
 }

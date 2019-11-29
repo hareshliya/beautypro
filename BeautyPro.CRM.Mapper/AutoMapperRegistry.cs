@@ -64,6 +64,13 @@ namespace BeautyPro.CRM.Mapper
                 .ForMember(c => c.TreatmentName, m => m.MapFrom(x => x.Tt.Ttname));
 
             cfg.CreateMap<Product, ProductDTO>();
+
+            cfg.CreateMap<CustomerScheduleTreatment, AppointmentTreatment>()
+                .ForMember(c => c.Ttid, m => m.MapFrom(x => x.Ttid))
+                .ForMember(c => c.EmpNo, m => m.MapFrom(x => x.Empno))
+                .ForMember(c => c.StartTime, m => m.MapFrom(x => x.StartTime))
+                .ForMember(c => c.EndTime, m => m.MapFrom(x => x.EndTime))
+                .ForMember(c => c.Qty, m => m.MapFrom(x => x.Qty));
         }
     }
 }
