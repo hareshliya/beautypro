@@ -49,9 +49,10 @@ namespace BeautyPro.CRM.Api.Services
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.UserType),
-                    new Claim(ClaimConstants.BARNCH_ID, user.BranchId.ToString())
+                    new Claim(ClaimConstants.BARNCH_ID, user.BranchId.ToString()),
+                    new Claim(ClaimConstants.DEPARTMENT_ID, user.DepartmentId.HasValue ? user.DepartmentId.Value.ToString() : string.Empty)
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
