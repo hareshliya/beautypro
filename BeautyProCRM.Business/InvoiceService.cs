@@ -1,7 +1,10 @@
-﻿using BeautyPro.CRM.Contract.DTO.UI;
+﻿using BeautyPro.CRM.Contract.DTO;
+using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
+using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,17 @@ namespace BeautyProCRM.Business
         {
             _customerInvoiceHeaderRepository = customerInvoiceHeaderRepository;
         }
+
+
+        public List<InvoiceDTO> GetAllInvoices(int departmentId)
+        {
+            return DomainDTOMapper.ToInvoiceDTOs(_customerInvoiceHeaderRepository
+                .All
+                .Where(x => x.DepartmentId == departmentId)
+                .Include(x => x.Customer)
+                .ToList());
+        }
+
         public void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId)
         {
             try

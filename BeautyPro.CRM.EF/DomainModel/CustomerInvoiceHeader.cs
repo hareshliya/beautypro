@@ -14,6 +14,9 @@ namespace BeautyPro.CRM.EF.DomainModel
         }
 
         public string InvoiceNo { get; set; }
+
+        [ForeignKey("Customer")]
+        [Column(TypeName = "char(10)")]
         public string CustomerId { get; set; }
         public DateTime InvDateTime { get; set; }
         public int BranchId { get; set; }
@@ -47,7 +50,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime EnteredDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? CanceledDate { get; set; }
-
+        public virtual Customer Customer { get; set; }
         public virtual Department Department { get; set; }
         public virtual PaymentType Pt { get; set; }
         public virtual CreditCardType CreditCardType { get; set; }

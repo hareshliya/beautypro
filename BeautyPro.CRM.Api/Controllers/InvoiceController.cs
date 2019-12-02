@@ -60,5 +60,12 @@ namespace BeautyPro.CRM.Api.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpGet]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
+        public IActionResult GetInvoices([FromQuery]int departmentId)
+        {
+            return Ok(_invoiceService.GetAllInvoices(departmentId));
+        }
     }
 }
