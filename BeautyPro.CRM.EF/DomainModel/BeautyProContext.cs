@@ -411,7 +411,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                     .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_EmployeeDetail");
 
                 entity.HasOne(d => d.InvoiceNoNavigation)
-                    .WithMany(p => p.CustomerInvoiceTreatment)
+                    .WithMany(p => p.CustomerInvoiceTreatments)
                     .HasForeignKey(d => d.InvoiceNo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_CustomerInvoiceHeader");

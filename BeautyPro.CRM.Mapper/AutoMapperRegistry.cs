@@ -73,6 +73,8 @@ namespace BeautyPro.CRM.Mapper
                 .ForMember(c => c.EndTime, m => m.MapFrom(x => x.EndTime))
                 .ForMember(c => c.Qty, m => m.MapFrom(x => x.Qty));
 
+           
+
             cfg.CreateMap<CustomerInvoiceHeader, InvoiceDTO>()
                 .ForMember(c => c.InvoiceNo, m => m.MapFrom(x => x.InvoiceNo))
                 .ForMember(c => c.CustomeFullName, m => m.MapFrom(x => x.Customer.FullName))
@@ -80,7 +82,16 @@ namespace BeautyPro.CRM.Mapper
                 .ForMember(c => c.Tax, m => m.MapFrom(x => x.ProductTaxAmount + x.TreatmentTaxAmount))
                 .ForMember(c => c.SubTotal, m => m.MapFrom(x => x.TreatmentSubTotalAmount + x.ProductSubTotalAmount))
                 .ForMember(c => c.Discount, m => m.MapFrom(x => x.TreatmentDiscountAmount))
-                .ForMember(c => c.DueAmount, m => m.MapFrom(x => x.ProductDueAmount + x.TreatmentDueAmount));
+                .ForMember(c => c.DueAmount, m => m.MapFrom(x => x.ProductDueAmount + x.TreatmentDueAmount))
+                .ForMember(c => c.InvoiceTreatments, m => m.MapFrom(x => x.CustomerInvoiceTreatments))
+                .ForMember(c => c.InvoiceProducts, m => m.MapFrom(x => x.CustomerInvoiceProducts));
+
+            cfg.CreateMap<CustomerInvoiceTreatment, InvoiceTreatmentDTO>()
+                .ForMember(c => c.TreatmentTypeName, m => m.MapFrom(c => c.Tt.Ttname))
+                .ForMember(c => c.EmployeeName, m => m.MapFrom(c => c.EmpnoNavigation.Name));
+
+            cfg.CreateMap<CustomerInvoiceProducts, InvoiceProductDTO>()
+                .ForMember(c => c.RecomendedBy, m => m.MapFrom(c => c.EmpnoNavigation.Name));
         }
     }
 }

@@ -13,5 +13,7 @@ namespace BeautyPro.CRM.Contract.DTO
         public decimal SubTotal { get; set; }
         public decimal Discount { get; set; }
         public decimal DueAmount { get; set; }
+        public List<InvoiceProductDTO> InvoiceProducts { get; set; }
+        public List<InvoiceTreatmentDTO> InvoiceTreatments { get; set; }
     }
 }

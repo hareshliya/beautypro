@@ -10,7 +10,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public CustomerInvoiceHeader()
         {
             CustomerInvoiceProducts = new HashSet<CustomerInvoiceProducts>();
-            CustomerInvoiceTreatment = new HashSet<CustomerInvoiceTreatment>();
+            CustomerInvoiceTreatments = new HashSet<CustomerInvoiceTreatment>();
         }
 
         public string InvoiceNo { get; set; }
@@ -55,6 +55,6 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual PaymentType Pt { get; set; }
         public virtual CreditCardType CreditCardType { get; set; }
         public virtual ICollection<CustomerInvoiceProducts> CustomerInvoiceProducts { get; set; }
-        public virtual ICollection<CustomerInvoiceTreatment> CustomerInvoiceTreatment { get; set; }
+        public virtual ICollection<CustomerInvoiceTreatment> CustomerInvoiceTreatments { get; set; }
     }
 }

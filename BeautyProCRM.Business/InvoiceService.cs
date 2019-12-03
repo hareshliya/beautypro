@@ -31,6 +31,16 @@ namespace BeautyProCRM.Business
                 .ToList());
         }
 
+        public List<InvoiceDTO> GetInvoiceDetails(string invNo)
+        {
+            return DomainDTOMapper.ToInvoiceDTOs(_customerInvoiceHeaderRepository
+                .All
+                .Where(x => x.InvoiceNo == invNo)
+                .Include(c => c.CustomerInvoiceTreatments)
+                .Include(c => c.CustomerInvoiceProducts)
+                .ToList());
+        }
+
         public void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId)
         {
             try
@@ -97,7 +107,7 @@ namespace BeautyProCRM.Business
                     DepartmentId = request.DepartmentId,
                     IsCanceled = false,
                     CustomerInvoiceProducts = invoiceableproducts,
-                    CustomerInvoiceTreatment = invoiceableTreatments,
+                    CustomerInvoiceTreatments = invoiceableTreatments,
                     TreatmentSubTotalAmount = treatmentsSubTotal,
                     TreatmentDueAmount = treatmentsDueAmount,
                     TreatmentTaxAmount = treatmentsTax,

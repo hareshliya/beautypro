@@ -11,5 +11,6 @@ namespace BeautyProCRM.Business.Interfaces
         void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId);
         void ApplyDiscount(InvoiceDiscountRequest request);
         List<InvoiceDTO> GetAllInvoices(int departmentId);
+        List<InvoiceDTO> GetInvoiceDetails(string invNo);
     }
 }
