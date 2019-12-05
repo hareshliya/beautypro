@@ -98,5 +98,10 @@ namespace BeautyPro.CRM.Mapper
         {
             return AutoMapper.Mapper.Map<ICollection<CustomerInvoiceHeader>, List<InvoiceDTO>>(headers);
         }
+
+        public static InvoiceDTO ToInvoiceDTO(CustomerInvoiceHeader headers)
+        {
+            return AutoMapper.Mapper.Map<CustomerInvoiceHeader, InvoiceDTO>(headers);
+        }
     }
 }

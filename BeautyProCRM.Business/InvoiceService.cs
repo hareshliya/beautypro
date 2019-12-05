@@ -31,14 +31,14 @@ namespace BeautyProCRM.Business
                 .ToList());
         }
 
-        public List<InvoiceDTO> GetInvoiceDetails(string invNo)
+        public InvoiceDTO GetInvoiceDetails(string invNo)
         {
-            return DomainDTOMapper.ToInvoiceDTOs(_customerInvoiceHeaderRepository
+            return DomainDTOMapper.ToInvoiceDTO(_customerInvoiceHeaderRepository
                 .All
                 .Where(x => x.InvoiceNo == invNo)
                 .Include(c => c.CustomerInvoiceTreatments)
                 .Include(c => c.CustomerInvoiceProducts)
-                .ToList());
+                .FirstOrDefault());
         }
 
         public void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId)
