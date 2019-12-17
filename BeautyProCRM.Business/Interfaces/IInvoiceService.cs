@@ -12,5 +12,7 @@ namespace BeautyProCRM.Business.Interfaces
         void ApplyDiscount(InvoiceDiscountRequest request);
         List<InvoiceDTO> GetAllInvoices(int departmentId);
         InvoiceDTO GetInvoiceDetails(string invNo);
+        void CancelInvoice(string invoiceNo);
+        List<InvoiceDTO> GetAllFilteredInvoices(InvoiceFilterRequest request);
     }
 }

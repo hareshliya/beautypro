@@ -40,7 +40,8 @@ namespace BeautyPro.CRM.EF.DomainModel
 
         public int DepartmentId { get; set; }
         public string GvinvoiceNo { get; set; }
-        public bool IsCanceled { get; set; }
+        //public bool IsCanceled { get; set; }
+        public int Status { get; set; }
         public string CancelReason { get; set; }
         public bool? IsAmended { get; set; }
         public string AmendedReason { get; set; }

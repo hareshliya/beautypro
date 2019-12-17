@@ -68,11 +68,33 @@ namespace BeautyPro.CRM.Api.Controllers
             return Ok(_invoiceService.GetAllInvoices(departmentId));
         }
 
+        [HttpGet("filter")]
+        [Authorize]
+        public IActionResult GetFilteredInvoices([FromQuery]InvoiceFilterRequest request)
+        {
+            return Ok(_invoiceService.GetAllFilteredInvoices(request));
+        }
+
         [HttpGet("details")]
         [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         public IActionResult GetInvoiceDetails([FromQuery]string invoiceNo)
         {
             return Ok(_invoiceService.GetInvoiceDetails(invoiceNo));
+        }
+
+        [HttpPost("cancel")]
+        [Authorize(Roles = "SystemAdmin,GeneralManager")]
+        public IActionResult CancelInvoice([FromQuery]string invoiceNo)
+        {
+            try
+            {
+                _invoiceService.CancelInvoice(invoiceNo);
+                return Ok(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

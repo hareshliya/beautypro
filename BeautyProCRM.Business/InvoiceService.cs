@@ -4,6 +4,7 @@ using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
+using BeautyProCRM.Common.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,16 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToInvoiceDTOs(_customerInvoiceHeaderRepository
                 .All
                 .Where(x => x.DepartmentId == departmentId)
+                .Include(x => x.Customer)
+                .ToList());
+        }
+
+        public List<InvoiceDTO> GetAllFilteredInvoices(InvoiceFilterRequest request)
+        {
+            return DomainDTOMapper.ToInvoiceDTOs(_customerInvoiceHeaderRepository
+                .All
+                .Where(x => x.DepartmentId == request.DepartmentId 
+                    && (x.Status == (int)request.Status || request.Status == InvoiceStatus.All) && x.InvDateTime.Date == request.Date.Date)
                 .Include(x => x.Customer)
                 .ToList());
         }
@@ -105,7 +116,8 @@ namespace BeautyProCRM.Business
                     TransType = "Cash",
                     Ptid = 1,
                     DepartmentId = request.DepartmentId,
-                    IsCanceled = false,
+                    // IsCanceled = false,
+                    Status = (int)InvoiceStatus.Invoiced,
                     CustomerInvoiceProducts = invoiceableproducts,
                     CustomerInvoiceTreatments = invoiceableTreatments,
                     TreatmentSubTotalAmount = treatmentsSubTotal,
@@ -143,6 +155,19 @@ namespace BeautyProCRM.Business
 
                 _customerInvoiceHeaderRepository.SaveChanges();
             }         
+        }
+
+        public void CancelInvoice(string invoiceNo)
+        {
+            var invoiceHeader = _customerInvoiceHeaderRepository
+                .FirstOrDefault(c => c.InvoiceNo == invoiceNo);
+
+            if(invoiceHeader != null)
+            {
+                //invoiceHeader.IsCanceled = true;
+                invoiceHeader.Status = (int)InvoiceStatus.Cancelled;
+                _customerInvoiceHeaderRepository.SaveChanges();
+            }
         }
 
         private string GenerateInvoiceNo()
