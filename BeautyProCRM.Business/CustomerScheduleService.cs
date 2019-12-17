@@ -65,10 +65,10 @@ namespace BeautyProCRM.Business
                 BookedDate = request.BookedDate,
                 Status = AppoinmentConstant.PENDING,
                 DepartmentId = request.DepartmentId,
-                BranchId = request.BranchId,
-                EnteredBy = request.EnteredBy,
+                BranchId = branchId,
+                EnteredBy = userId,
                 EnteredDate = DateTime.Now,
-                CustomerScheduleTreatments = treatments
+                CustomerScheduleTreatments = treatments,
             };
 
             _customerScheduleRepository.Add(customerSchedule);
