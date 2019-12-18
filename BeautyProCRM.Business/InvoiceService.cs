@@ -47,6 +47,7 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToInvoiceDTO(_customerInvoiceHeaderRepository
                 .All
                 .Where(x => x.InvoiceNo == invNo)
+                .Include(x => x.Customer)
                 .Include(c => c.CustomerInvoiceTreatments)
                 .Include(c => c.CustomerInvoiceProducts)
                 .FirstOrDefault());

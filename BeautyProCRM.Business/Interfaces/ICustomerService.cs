@@ -12,5 +12,6 @@ namespace BeautyProCRM.Business.Interfaces
         void AddEditCustomer(NewCustomerRequest request, int userId, int branchId);
         void RemoveCustomer(string customerId, int userId);
         CustomerDTO GetCustomer(string customerId);
+        List<CustomerDTO> SearchCustomersForConfirmedSchedulesForToday(CustomerSearchRequest request);
     }
 }

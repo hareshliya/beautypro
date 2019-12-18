@@ -2,7 +2,9 @@
 using BeautyPro.CRM.Contract.DTO.UI;
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
+using BeautyProCRM.Business.Constants;
 using BeautyProCRM.Business.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,23 @@ namespace BeautyProCRM.Business
         public List<CustomerDTO> SearchCustomer(CustomerSearchRequest request)
         {
             var customers = _customerRepository.All.Where(x => !x.IsDeleted && x.DeletedBy == null);
+
+            if (!string.IsNullOrWhiteSpace(request.SearchText))
+            {
+                customers = customers.Where(c => c.FullName.Contains(request.SearchText));
+            }
+
+            return DomainDTOMapper.ToCustomerDTOs(customers.ToList());
+        }
+
+        public List<CustomerDTO> SearchCustomersForConfirmedSchedulesForToday(CustomerSearchRequest request)
+        {
+            var customers = 
+                _customerRepository
+                .All          
+                .Include(x => x.CustomerSchedules)
+                .Where(x => !x.IsDeleted && x.DeletedBy == null 
+                && x.CustomerSchedules.Any(c => c.Status == AppoinmentConstant.CONFIRMED && c.BookedDate == DateTime.Now.Date));
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
             {

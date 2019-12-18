@@ -39,6 +39,13 @@ namespace BeautyPro.CRM.Api.Controllers
             return Ok(_customerservice.SearchCustomer(request));
         }
 
+        [HttpGet("search-confirmed-schedule-customer")]
+        [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
+        public IActionResult SearchCustomersForConfirmedSchedulesForToday([FromQuery]CustomerSearchRequest request)
+        {
+            return Ok(_customerservice.SearchCustomersForConfirmedSchedulesForToday(request));
+        }
+
         [HttpPost]
         [Authorize(Roles = "SystemAdmin,GeneralManager")]
         public IActionResult AddEditCustomer([FromBody]NewCustomerRequest request)

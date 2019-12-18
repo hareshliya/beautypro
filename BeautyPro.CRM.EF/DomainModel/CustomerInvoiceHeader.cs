@@ -55,7 +55,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual Department Department { get; set; }
         public virtual PaymentType Pt { get; set; }
         public virtual CreditCardType CreditCardType { get; set; }
-        public virtual ICollection<CustomerInvoiceProducts> CustomerInvoiceProducts { get; set; }
+        public virtual ICollection<CustomerInvoiceProducts> CustomerInvoiceProducts { get; set; } = new List<CustomerInvoiceProducts>();
         public virtual ICollection<CustomerInvoiceTreatment> CustomerInvoiceTreatments { get; set; }
     }
 }
