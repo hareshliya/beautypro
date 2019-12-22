@@ -9,5 +9,6 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     {
         public int? DepartmentId { get; set; }
         public AppointmentStatus Status { get; set; }
+        public DateTime BookedDate { get; set; }
     }
 }

@@ -35,7 +35,8 @@ namespace BeautyProCRM.Business
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Department)
                 .Include(c => c.Employee)
                 .Include(c => c.Tt)
-                .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null 
+                .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null
+                    && x.CustomerSchedule.BookedDate.Date == request.BookedDate.Date
                     && (x.CustomerSchedule.Status == status || request.Status == AppointmentStatus.All))
                 .Select(c => new AppointmentListResponse()
                 {
