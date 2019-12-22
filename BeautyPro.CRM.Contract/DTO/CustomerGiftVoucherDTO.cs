@@ -10,6 +10,7 @@ namespace BeautyPro.CRM.Contract.DTO
         public string VoucherNo { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public string TransType { get; set; }
         public DateTime InvDateTime { get; set; }
         public int BranchId { get; set; }
         public int Ttid { get; set; }

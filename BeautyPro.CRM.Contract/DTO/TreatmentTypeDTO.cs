@@ -18,6 +18,7 @@ namespace BeautyPro.CRM.Contract.DTO
         public int EnteredBy { get; set; }
         public int? ModifiedBy { get; set; }
         public int? DeletedBy { get; set; }
+        public string ColorCode { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }

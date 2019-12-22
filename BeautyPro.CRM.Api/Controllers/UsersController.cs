@@ -32,5 +32,13 @@ namespace BeautyPro.CRM.Api.Controllers
 
             return Ok(user);
         }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Create([FromBody]RegisterModel model)
+        {
+            var user = _userService.Create(model.User, model.Password);
+            return Ok(user);
+        }
     }
 }

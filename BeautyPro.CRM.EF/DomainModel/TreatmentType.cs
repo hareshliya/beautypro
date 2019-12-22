@@ -28,7 +28,7 @@ namespace BeautyPro.CRM.EF.DomainModel
         public DateTime EnteredDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-
+        public string ColorCode { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual Department Department { get; set; }
         public virtual ICollection<CustomerGiftVoucher> TblCustomerGiftVoucher { get; set; }

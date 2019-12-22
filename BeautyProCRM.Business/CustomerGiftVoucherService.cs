@@ -29,7 +29,9 @@ namespace BeautyProCRM.Business
         {
             var vouchers =
                 _customerGiftVoucherRepository
-                .All.Include(x => x.Customer);
+                .All
+                .Include(x => x.Customer)
+                .Where(x => x.InvDateTime.Date == request.Date.Date);
 
             if(request.Status == VoucherStatus.Redeemed)
             {
