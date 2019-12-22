@@ -17,6 +17,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public string ClientName { get; set; }
         public string ScheduleStatus { get; set; }
         public string TreatmentType { get; set; }
+        public string ColorCode { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
     }
