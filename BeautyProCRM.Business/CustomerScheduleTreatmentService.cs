@@ -3,6 +3,7 @@ using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Constants;
 using BeautyProCRM.Business.Interfaces;
+using BeautyProCRM.Common.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace BeautyProCRM.Business
     public class CustomerScheduleTreatmentService : ICustomerScheduleTreatmentService
     {
         private readonly ICustomerScheduleTreatmentRepository _customerScheduleTreatmentRepository;
+        private const string PENDING = "Pending";
+        private const string CONFIRMED = "confirmed";
+        private const string CANCELLED = "Cancelled";
+
 
         public CustomerScheduleTreatmentService(ICustomerScheduleTreatmentRepository customerScheduleTreatmentRepository)
         {
@@ -22,12 +27,16 @@ namespace BeautyProCRM.Business
 
         public List<AppointmentListResponse> GetFilteredAppointments(AppointmentFilterRequest request)
         {
+
+            string status = GetAppointmentStatus(request.Status);
+
             var appointments = _customerScheduleTreatmentRepository.All
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Customer)
                 .Include(x => x.CustomerSchedule).ThenInclude(c => c.Department)
                 .Include(c => c.Employee)
                 .Include(c => c.Tt)
-                .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null)
+                .Where(x => x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null 
+                    && (x.CustomerSchedule.Status == status || request.Status == AppointmentStatus.All))
                 .Select(c => new AppointmentListResponse()
                 {
                     CsId = c.Csid,
@@ -65,6 +74,17 @@ namespace BeautyProCRM.Business
                             .ToList();
 
             return DomainDTOMapper.ToInvoiceTreatmentResponse(treatments);
+        }
+
+        private string GetAppointmentStatus(AppointmentStatus status)
+        {
+            switch (status)
+            {
+                case AppointmentStatus.Cancelled: return CANCELLED;
+                case AppointmentStatus.Confirmed: return CONFIRMED;
+                case AppointmentStatus.Pending: return PENDING;
+                default: return string.Empty;
+            }
         }
     }
 }
