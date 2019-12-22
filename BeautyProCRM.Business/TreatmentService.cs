@@ -34,7 +34,10 @@ namespace BeautyProCRM.Business
                 .All
                 .Include(c => c.Department)
                 .ThenInclude(c => c.TreatmentTypes)
-                .Where(c => c.DepartmentId == request.DepartmentId && c.Empno == request.EMPNo && !c.IsDeleted && c.DeletedBy == null)
+                .Where(c => c.DepartmentId == request.DepartmentId 
+                    && c.Empno == request.EMPNo 
+                    && !c.IsDeleted && c.DeletedBy == null
+                    && c.DeletedBy == null && c.DeletedDate == null)
                 .FirstOrDefault();
 
             if (employee != null && employee.Department != null && employee.Department.TreatmentTypes != null)

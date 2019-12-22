@@ -32,7 +32,10 @@ namespace BeautyPro.CRM.Api.Controllers
         [ProducesResponseType(typeof(TreatmentTypeDTO), (int)HttpStatusCode.OK)]
         public IActionResult GetAllTreatments()
         {
-            return Ok(DomainDTOMapper.ToTreatmentTypesDTOs(_treatmentTypeRepository.GetAll().ToList()));
+            return Ok(DomainDTOMapper.ToTreatmentTypesDTOs(
+                _treatmentTypeRepository.All
+                .Where(x => x.DeletedBy == null && x.DeletedDate == null)
+                .ToList()));
         }
 
         [HttpPost("employee")]
