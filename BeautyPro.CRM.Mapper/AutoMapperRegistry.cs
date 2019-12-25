@@ -59,7 +59,8 @@ namespace BeautyPro.CRM.Mapper
                 .ForMember(c => c.Quantity, m => m.MapFrom(x => x.Qty))
                 .ForMember(c => c.DepartmentId, m => m.MapFrom(x => x.CustomerSchedule.DepartmentId))
                 .ForMember(c => c.CustomerScheduleId, m => m.MapFrom(x => x.CustomerSchedule.Csid))
-                .ForMember(c => c.CustomerId, m => m.MapFrom(x => x.CustomerSchedule.Customer.CustomerId));
+                .ForMember(c => c.CustomerId, m => m.MapFrom(x => x.CustomerSchedule.Customer.CustomerId))
+                .ForMember(c => c.TreatmentDuration, m => m.MapFrom(x => x.Tt.Duration));
 
             cfg.CreateMap<CustomerScheduleTreatment, InvoiceTreatmentResponse>()
                 .ForMember(c => c.EmployeeName, m => m.MapFrom(x => x.Employee.Name))
@@ -67,7 +68,9 @@ namespace BeautyPro.CRM.Mapper
                 .ForMember(c => c.Amount, m => m.MapFrom(x => x.Tt.Price * x.Qty))
                 .ForMember(c => c.Quantity, m => m.MapFrom(x => x.Qty))
                 .ForMember(c => c.Price, m => m.MapFrom(x => x.Tt.Price))
-                .ForMember(c => c.TreatmentName, m => m.MapFrom(x => x.Tt.Ttname));
+                .ForMember(c => c.TreatmentName, m => m.MapFrom(x => x.Tt.Ttname))
+                .ForMember(c => c.CustomerScheduleTreatmentId, m => m.MapFrom(x => x.Cstid))
+                .ForMember(c => c.TreatmentTypeId, m => m.MapFrom(x => x.Ttid));
 
             cfg.CreateMap<Product, ProductDTO>()
                 .ForMember(c => c.SellingPrice, m => m.MapFrom(x => x.ProductSellingPrice.SellingPrice));

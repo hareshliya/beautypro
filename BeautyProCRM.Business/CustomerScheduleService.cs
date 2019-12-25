@@ -124,15 +124,18 @@ namespace BeautyProCRM.Business
 
         }
 
-        public List<EmployeeDetailDTO> GetFilteredEmployees(int departmentId)
+        public List<EmployeeDetailDTO> GetFilteredEmployees(EmployeeRosterRequest request)
         {
             var employees = _employeeDetailRepository.All
             .Where(x => !x.IsDeleted && x.DeletedBy == null);
 
-            if (departmentId != 0)
+            if (request.departmentId != 0)
             {
                 employees = employees
-                    .Where(x => x.DepartmentId == departmentId && x.DeletedBy == null && x.DeletedDate == null);
+                    .Include(x => x.EmployeeRosters)
+                    .Where(x => x.DepartmentId == request.departmentId
+                    && x.DeletedBy == null && x.DeletedDate == null
+                    && x.EmployeeRosters.Any(l => l.WorkingDate == request.Date));
             }
             return DomainDTOMapper.ToEmployeeDetailDTOs(employees.ToList());
         }

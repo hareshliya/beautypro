@@ -70,9 +70,9 @@ namespace BeautyPro.CRM.Api.Controllers
         [HttpGet("employees")]
         [Authorize(Roles = "SystemAdmin,GeneralManager,Receiption,Director,Accountant")]
         [ProducesResponseType(typeof(EmployeeDetailDTO), (int)HttpStatusCode.OK)]
-        public IActionResult GetFilteredEmployees([FromQuery]int departmentId)
+        public IActionResult GetFilteredEmployees([FromQuery]EmployeeRosterRequest request)
         {
-            return Ok(_customerScheduleService.GetFilteredEmployees(departmentId));
+            return Ok(_customerScheduleService.GetFilteredEmployees(request));
         }
 
         [HttpPost("status")]

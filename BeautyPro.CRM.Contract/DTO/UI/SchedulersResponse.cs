@@ -25,5 +25,6 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public int DepartmentId { get; set; }
         public int CustomerScheduleId { get; set; }
         public string CustomerId { get; set; }
+        public int TreatmentDuration { get; set; }
     }
 }
