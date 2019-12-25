@@ -72,6 +72,7 @@ namespace BeautyProCRM.Business
                             .Where(x => x.CustomerSchedule.CustomerId == request.CustomerId
                                 && (x.CustomerSchedule.DeletedBy == null && x.CustomerSchedule.DeletedDate == null)
                                 && x.CustomerSchedule.Status == AppoinmentConstant.CONFIRMED
+                                && x.CustomerSchedule.DepartmentId == request.DepartmentId
                                 && x.CustomerSchedule.BookedDate == DateTime.Now.Date)          
                             .ToList();
 
