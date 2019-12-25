@@ -47,13 +47,21 @@ namespace BeautyPro.CRM.Api.Controllers
         }
 
         [HttpPost("invoice-discount")]
-        [Authorize(Roles = "SystemAdmin,GeneralManager")]
+        [Authorize]
         public IActionResult ApplyDiscount([FromBody]InvoiceDiscountRequest request)
         {
             try
             {
-                _invoiceService.ApplyDiscount(request);
-                return Ok(HttpStatusCode.OK);
+                var canApply = _invoiceService.ApplyDiscount(request);
+                if (canApply)
+                {
+                    return Ok(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+                
             }
             catch (Exception ex)
             {

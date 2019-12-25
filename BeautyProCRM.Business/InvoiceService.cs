@@ -144,29 +144,12 @@ namespace BeautyProCRM.Business
             }
         }
 
-        public void ApplyDiscount(InvoiceDiscountRequest request)
+        public bool ApplyDiscount(InvoiceDiscountRequest request)
         {
             var encryptedPassword = UserHelper.Encrypt(request.Otp);
             var user = _userRepository.FirstOrDefault(x => x.UserName == request.User);
 
-            if(user != null && (user.UserType == "SystemAdmin" || user.UserType == "GeneralManager"))
-            {
-                var invoiceHeader =
-                _customerInvoiceHeaderRepository
-                .FirstOrDefault(c => c.InvoiceNo == request.InvoiceNo);
-
-                if (invoiceHeader != null)
-                {
-                    decimal newTax = (invoiceHeader.TreatmentSubTotalAmount - request.Discount) * 0.06M;
-                    decimal newDueAmount = newTax + (invoiceHeader.TreatmentSubTotalAmount - request.Discount);
-
-                    invoiceHeader.TreatmentDiscountAmount = request.Discount;
-                    invoiceHeader.TreatmentTaxAmount = newTax;
-                    invoiceHeader.TreatmentDueAmount = newDueAmount;
-
-                    _customerInvoiceHeaderRepository.SaveChanges();
-                }
-            }               
+            return user != null;              
         }
 
         public void CancelInvoice(string invoiceNo)
