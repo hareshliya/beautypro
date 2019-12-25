@@ -46,7 +46,7 @@ namespace BeautyProCRM.Business
                 .All          
                 .Include(x => x.CustomerSchedules)
                 .Where(x => !x.IsDeleted && x.DeletedBy == null 
-                && x.CustomerSchedules.Any(c => c.Status == AppoinmentConstant.CONFIRMED && c.BookedDate == DateTime.Now.Date));
+                && x.CustomerSchedules.Any(c => c.Status == AppoinmentConstant.CONFIRMED && c.BookedDate == DateTime.Now.Date && c.DepartmentId == request.DepartmentId));
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
             {

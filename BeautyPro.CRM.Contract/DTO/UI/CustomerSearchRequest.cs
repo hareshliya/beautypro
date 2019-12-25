@@ -7,5 +7,6 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     public class CustomerSearchRequest
     {
         public string SearchText { get; set; }
+        public int DepartmentId { get; set; }
     }
 }
