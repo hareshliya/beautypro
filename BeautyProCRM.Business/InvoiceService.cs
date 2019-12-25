@@ -5,6 +5,7 @@ using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
 using BeautyProCRM.Common.Enum;
+using BeautyProCRM.Common.Helper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,14 @@ namespace BeautyProCRM.Business
     public class InvoiceService : IInvoiceService
     {
         private readonly ICustomerInvoiceHeaderRepository _customerInvoiceHeaderRepository;
+        private readonly IUserRepository _userRepository;
+
         public InvoiceService(
-            ICustomerInvoiceHeaderRepository customerInvoiceHeaderRepository)
+            ICustomerInvoiceHeaderRepository customerInvoiceHeaderRepository,
+            IUserRepository userRepository)
         {
             _customerInvoiceHeaderRepository = customerInvoiceHeaderRepository;
+            _userRepository = userRepository;
         }
 
 
@@ -141,21 +146,27 @@ namespace BeautyProCRM.Business
 
         public void ApplyDiscount(InvoiceDiscountRequest request)
         {
-            var invoiceHeader =
+            var encryptedPassword = UserHelper.Encrypt(request.Otp);
+            var user = _userRepository.FirstOrDefault(x => x.UserName == request.User);
+
+            if(user != null && (user.UserType == "SystemAdmin" || user.UserType == "GeneralManager"))
+            {
+                var invoiceHeader =
                 _customerInvoiceHeaderRepository
                 .FirstOrDefault(c => c.InvoiceNo == request.InvoiceNo);
 
-            if(invoiceHeader != null)
-            {
-                decimal newTax = (invoiceHeader.TreatmentSubTotalAmount - request.Discount) * 0.06M;
-                decimal newDueAmount = newTax + (invoiceHeader.TreatmentSubTotalAmount - request.Discount);
+                if (invoiceHeader != null)
+                {
+                    decimal newTax = (invoiceHeader.TreatmentSubTotalAmount - request.Discount) * 0.06M;
+                    decimal newDueAmount = newTax + (invoiceHeader.TreatmentSubTotalAmount - request.Discount);
 
-                invoiceHeader.TreatmentDiscountAmount = request.Discount;
-                invoiceHeader.TreatmentTaxAmount = newTax;
-                invoiceHeader.TreatmentDueAmount = newDueAmount;
+                    invoiceHeader.TreatmentDiscountAmount = request.Discount;
+                    invoiceHeader.TreatmentTaxAmount = newTax;
+                    invoiceHeader.TreatmentDueAmount = newDueAmount;
 
-                _customerInvoiceHeaderRepository.SaveChanges();
-            }         
+                    _customerInvoiceHeaderRepository.SaveChanges();
+                }
+            }               
         }
 
         public void CancelInvoice(string invoiceNo)

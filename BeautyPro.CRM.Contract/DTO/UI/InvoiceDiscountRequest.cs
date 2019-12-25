@@ -8,5 +8,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     {
         public decimal Discount { get; set; }
         public string InvoiceNo { get; set; }
+        public string User { get; set; }
+        public string Otp { get; set; }
     }
 }

@@ -20,5 +20,8 @@ namespace BeautyPro.CRM.Contract.DTO.UI
         public string ColorCode { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
+        public DateTime ScheduledDate { get; set; }
+        public int Quantity { get; set; }
+        public int DepartmentId { get; set; }
     }
 }
