@@ -129,11 +129,11 @@ namespace BeautyProCRM.Business
             var employees = _employeeDetailRepository.All
             .Where(x => !x.IsDeleted && x.DeletedBy == null);
 
-            if (request.departmentId != 0)
+            if (request.DepartmentId != 0)
             {
                 employees = employees
                     .Include(x => x.EmployeeRosters)
-                    .Where(x => x.DepartmentId == request.departmentId
+                    .Where(x => x.DepartmentId == request.DepartmentId
                     && x.DeletedBy == null && x.DeletedDate == null
                     && x.EmployeeRosters.Any(l => l.WorkingDate == request.Date));
             }

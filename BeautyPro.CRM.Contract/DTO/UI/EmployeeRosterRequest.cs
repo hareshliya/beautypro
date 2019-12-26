@@ -6,7 +6,7 @@ namespace BeautyPro.CRM.Contract.DTO.UI
 {
     public class EmployeeRosterRequest
     {
-        public int departmentId { get; set; }
-        public DateTime Date { get; set; }
+        public int DepartmentId { get; set; }
+        public DateTime? Date { get; set; } = DateTime.Now;
     }
 }
