@@ -68,5 +68,20 @@ namespace BeautyPro.CRM.Api.Controllers
         {
             return Ok(_customerGiftVoucherService.GetPaymentTypes());
         }
+
+        [HttpPost("edit-voucher-status")]
+        public IActionResult ChangeVoucherStatus(VoucherStatusRequest request)
+        {
+            try
+            {
+                _customerGiftVoucherService.ChangeVoucherStatus(request);
+                return Ok(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            
+        }
     }
 }

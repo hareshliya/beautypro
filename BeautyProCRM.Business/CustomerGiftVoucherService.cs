@@ -123,5 +123,25 @@ namespace BeautyProCRM.Business
 
             return DomainDTOMapper.ToPaymentTypeDTOs(paymentTypes);
         }
+
+        public void ChangeVoucherStatus(VoucherStatusRequest request)
+        {
+            var giftVoucher = _customerGiftVoucherRepository
+                .FirstOrDefault(x => x.GvinvoiceNo == request.GVInvoiceNo);
+
+            switch (request.Status)
+            {
+                case VoucherStatus.Cancelled:
+                    giftVoucher.IsCanceled = true; giftVoucher.IsRedeem = false; break;
+
+                case VoucherStatus.Redeemed:
+                    giftVoucher.IsRedeem = true; giftVoucher.IsCanceled = false; break;
+
+                case VoucherStatus.Issued:
+                    giftVoucher.IsCanceled = false; giftVoucher.IsRedeem = false; break;
+            }
+
+            _customerGiftVoucherRepository.SaveChanges();
+        }
     }
 }

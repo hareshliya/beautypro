@@ -10,9 +10,8 @@ namespace BeautyProCRM.Business.Interfaces
     {
         List<CustomerGiftVoucherDTO> GetAllVouchers(VoucherRequest request);
         void AddEditVoucher(CustomerGiftVoucherDTO voucher, int userId, int branchId);
-
         List<PaymentTypeDTO> GetPaymentTypes();
-
         void DeleteVoucher(VoucherDeleteRequest request, int userId);
+        void ChangeVoucherStatus(VoucherStatusRequest request);
     }
 }
