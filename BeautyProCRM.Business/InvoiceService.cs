@@ -62,7 +62,7 @@ namespace BeautyProCRM.Business
         {
             try
             {
-                decimal treatmentsSubTotal = request.Treatments != null ? request.Treatments.Sum(c => c.Price * c.Quantity) : 0.0M;
+                /*decimal treatmentsSubTotal = request.Treatments != null ? request.Treatments.Sum(c => c.Price * c.Quantity) : 0.0M;
                 // decimal treatmentsTax = (treatmentsSubTotal - request.TreatmentDiscount) * 0.06M;
                 decimal treatmentsTax = treatmentsSubTotal * 0.06M;
                 //decimal treatmentsDueAmount = treatmentsTax + (treatmentsSubTotal - request.TreatmentDiscount);
@@ -70,7 +70,7 @@ namespace BeautyProCRM.Business
 
                 decimal productsSubTotal = request.Products != null ? request.Products.Sum(c => c.Price * c.Quantity) : 0.0M;
                 decimal productsTax = (productsSubTotal) * 0.06M;
-                decimal productsDueAmount = productsTax + productsSubTotal;
+                decimal productsDueAmount = productsTax + productsSubTotal;*/
 
                 var invoiceableTreatments = new List<CustomerInvoiceTreatment>();
                 var invoiceableproducts = new List<CustomerInvoiceProducts>();
@@ -126,12 +126,13 @@ namespace BeautyProCRM.Business
                     Status = (int)InvoiceStatus.Invoiced,
                     CustomerInvoiceProducts = invoiceableproducts,
                     CustomerInvoiceTreatments = invoiceableTreatments,
-                    TreatmentSubTotalAmount = treatmentsSubTotal,
-                    TreatmentDueAmount = treatmentsDueAmount,
-                    TreatmentTaxAmount = treatmentsTax,
-                    ProductSubTotalAmount = productsSubTotal,
-                    ProductDueAmount = productsDueAmount,
-                    ProductTaxAmount = productsTax,
+                    TreatmentSubTotalAmount = request.TreatmentSubTotal,
+                    TreatmentDueAmount = request.TreatmentDueAmount,
+                    TreatmentTaxAmount = request.TreatmentsTaxAmount,
+                    ProductSubTotalAmount = request.ProductSubTotal,
+                    ProductDueAmount = request.ProductDueAmount,
+                    ProductTaxAmount = request.ProductsTaxAmount,
+                    TreatmentDiscountAmount = request.TreatmentDiscountAmount,
                     CCTId = request.CreditCardTypeId
                 };
 

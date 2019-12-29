@@ -7,7 +7,7 @@ namespace BeautyPro.CRM.Contract.DTO
     public class InvoiceDTO
     {
         public string InvoiceNo { get; set; }
-        public string CustomeFullName { get; set; }
+        public string CustomerFullName { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal Tax { get; set; }
         public decimal SubTotal { get; set; }

@@ -86,7 +86,7 @@ namespace BeautyPro.CRM.Mapper
 
             cfg.CreateMap<CustomerInvoiceHeader, InvoiceDTO>()
                 .ForMember(c => c.InvoiceNo, m => m.MapFrom(x => x.InvoiceNo))
-                .ForMember(c => c.CustomeFullName, m => m.MapFrom(x => x.Customer.FullName))
+                .ForMember(c => c.CustomerFullName, m => m.MapFrom(x => x.Customer.FullName))
                 .ForMember(c => c.InvoiceDate, m => m.MapFrom(x => x.InvDateTime.Date))
                 .ForMember(c => c.Tax, m => m.MapFrom(x => x.ProductTaxAmount + x.TreatmentTaxAmount))
                 .ForMember(c => c.SubTotal, m => m.MapFrom(x => x.TreatmentSubTotalAmount + x.ProductSubTotalAmount))

@@ -80,9 +80,12 @@ namespace BeautyProCRM.Business
             var schedule = _customerScheduleRepository.All.Where(x => x.Csid == request.CsId)
                 .Include(c => c.CustomerScheduleTreatments).FirstOrDefault();
 
+            bool newTreatmentAdded = false;
+
             if (schedule != null)
             {
-                foreach (var treatment in schedule.CustomerScheduleTreatments)
+                foreach (var treatment in schedule.CustomerScheduleTreatments
+                    .Where(x => x.DeletedBy == null && x.DeletedDate == null))
                 {
                     var updatedTreatment = request.Treatments.Where(c => c.Ttid == treatment.Ttid).FirstOrDefault();
 
@@ -92,6 +95,10 @@ namespace BeautyProCRM.Business
                         treatment.StartTime = updatedTreatment.StartTime;
                         treatment.EndTime = updatedTreatment.EndTime;
                         treatment.Qty = updatedTreatment.Qty;
+                    }
+                    else if (updatedTreatment == null)
+                    {
+                        newTreatmentAdded = true;                 
                     }
                 }
 
@@ -105,6 +112,32 @@ namespace BeautyProCRM.Business
                 schedule.ModifiedDate = DateTime.Now;
 
                 _customerScheduleRepository.SaveChanges();
+
+                if (newTreatmentAdded)
+                {
+                    var newTreatment = request.Treatments.FirstOrDefault();
+                    if (newTreatment != null)
+                    {
+                        schedule.CustomerScheduleTreatments.Add(new CustomerScheduleTreatment()
+                        {
+                            Ttid = newTreatment.Ttid,
+                            Empno = newTreatment.EmpNo,
+                            StartTime = newTreatment.StartTime,
+                            EndTime = newTreatment.EndTime,
+                            Qty = newTreatment.Qty
+                        });
+                    }
+
+                    var oldTreatment = schedule.CustomerScheduleTreatments
+                        .FirstOrDefault(x => x.DeletedBy == null && x.DeletedDate == null);
+
+                    if(oldTreatment != null)
+                    {
+                        oldTreatment.DeletedDate = DateTime.Now;
+                        oldTreatment.DeletedBy = userId;
+                    }
+                    _customerScheduleRepository.SaveChanges();
+                }
             }
             
         }
@@ -174,7 +207,7 @@ namespace BeautyProCRM.Business
                 .Include(c => c.Tt)
                 .Include(c => c.Employee).ThenInclude(c => c.EmployeeRosters)
                 .Include(c => c.Employee).ThenInclude(c => c.Designation)
-                .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate))
+                .Where(x => x.Employee.EmployeeRosters.Any(l => l.WorkingDate == request.WorkingDate) && x.DeletedBy == null && x.DeletedDate == null)
                 .Where(x => x.CustomerSchedule.BranchId == request.BranchId && x.CustomerSchedule.BookedDate == request.WorkingDate &&
                 (x.CustomerSchedule.DepartmentId == request.DepartmentId || request.DepartmentId == 0)
                 && x.CustomerSchedule.Status != AppoinmentConstant.CANCELLED)

@@ -29,7 +29,9 @@ namespace BeautyProCRM.Business
 
         public List<CustomerDTO> SearchCustomer(CustomerSearchRequest request)
         {
-            var customers = _customerRepository.All.Where(x => !x.IsDeleted && x.DeletedBy == null);
+            var customers = _customerRepository.All
+                .OrderByDescending(x => x.EnteredDate)
+                .Where(x => !x.IsDeleted && x.DeletedBy == null);
 
             if (!string.IsNullOrWhiteSpace(request.SearchText))
             {

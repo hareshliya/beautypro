@@ -19,6 +19,8 @@ namespace BeautyPro.CRM.EF.DomainModel
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int Qty { get; set; }
+        public int? DeletedBy { get; set; }
+        public DateTime? DeletedDate { get; set; }
         public virtual CustomerSchedule CustomerSchedule { get; set; }
         public virtual EmployeeDetail Employee { get; set; }
         public virtual TreatmentType Tt { get; set; }
