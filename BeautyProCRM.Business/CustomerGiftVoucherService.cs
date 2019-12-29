@@ -30,6 +30,7 @@ namespace BeautyProCRM.Business
             var vouchers =
                 _customerGiftVoucherRepository
                 .All
+                .Where(x => x.DepartmentId == request.DepartmentId)
                 .Include(x => x.Customer)
                 .Where(x => x.InvDateTime.Date == request.Date.Date);
 
