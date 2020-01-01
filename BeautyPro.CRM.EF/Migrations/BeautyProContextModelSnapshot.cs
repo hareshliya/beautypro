@@ -59,6 +59,19 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.ToTable("Tbl_Branch");
                 });
 
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CreditCardType", b =>
+                {
+                    b.Property<int>("CCTId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CCTId");
+
+                    b.ToTable("Tbl_Mast_CreditCardType");
+                });
+
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.Customer", b =>
                 {
                     b.Property<string>("CustomerId")
@@ -176,10 +189,7 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("TransType")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
+                    b.Property<string>("TransType");
 
                     b.Property<int>("Ttid")
                         .HasColumnName("TTId");
@@ -200,6 +210,174 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.HasIndex("Ttid");
 
                     b.ToTable("Tbl_CustomerGiftVoucher");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceHeader", b =>
+                {
+                    b.Property<string>("InvoiceNo")
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<string>("AmendedReason");
+
+                    b.Property<int>("BranchId");
+
+                    b.Property<int?>("CCTId");
+
+                    b.Property<string>("CancelReason")
+                        .HasMaxLength(50)
+                        .IsUnicode(false);
+
+                    b.Property<int?>("CanceledBy");
+
+                    b.Property<DateTime?>("CanceledDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("char(10)")
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<int?>("CustomerScheduleTreatmentCstid");
+
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<int>("EnteredBy");
+
+                    b.Property<DateTime>("EnteredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("GvinvoiceNo")
+                        .HasColumnName("GVInvoiceNo")
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<DateTime>("InvDateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool?>("IsAmended");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<decimal>("ProductDueAmount");
+
+                    b.Property<decimal>("ProductSubTotalAmount");
+
+                    b.Property<decimal>("ProductTaxAmount");
+
+                    b.Property<int>("Ptid")
+                        .HasColumnName("PTId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("TransType")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<decimal>("TreatmentDiscountAmount");
+
+                    b.Property<decimal>("TreatmentDueAmount");
+
+                    b.Property<decimal>("TreatmentSubTotalAmount");
+
+                    b.Property<decimal>("TreatmentTaxAmount");
+
+                    b.HasKey("InvoiceNo");
+
+                    b.HasIndex("CCTId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("CustomerScheduleTreatmentCstid");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("Ptid");
+
+                    b.ToTable("Tbl_CustomerInvoiceHeader");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceProducts", b =>
+                {
+                    b.Property<int>("Cipid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CIPId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Empno");
+
+                    b.Property<string>("InvoiceNo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .IsUnicode(false);
+
+                    b.Property<decimal>("Qty")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("Cipid");
+
+                    b.HasIndex("Empno");
+
+                    b.HasIndex("InvoiceNo");
+
+                    b.ToTable("Tbl_CustomerInvoiceProducts");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceTreatment", b =>
+                {
+                    b.Property<int>("Citid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CITId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Cstid");
+
+                    b.Property<int>("Empno")
+                        .HasColumnName("EMPNo");
+
+                    b.Property<string>("InvoiceNo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Qty");
+
+                    b.Property<int>("Ttid")
+                        .HasColumnName("TTId");
+
+                    b.HasKey("Citid");
+
+                    b.HasIndex("Cstid");
+
+                    b.HasIndex("Empno");
+
+                    b.HasIndex("InvoiceNo");
+
+                    b.HasIndex("Ttid");
+
+                    b.ToTable("Tbl_CustomerInvoiceTreatment");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerSchedule", b =>
@@ -255,15 +433,23 @@ namespace BeautyPro.CRM.EF.Migrations
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerScheduleTreatment", b =>
                 {
                     b.Property<int>("Cstid")
-                        .HasColumnName("CSTId");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CSTId")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Csid")
                         .HasColumnName("CSId");
+
+                    b.Property<int?>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate");
 
                     b.Property<int>("Empno")
                         .HasColumnName("EMPNo");
 
                     b.Property<TimeSpan>("EndTime");
+
+                    b.Property<int>("Qty");
 
                     b.Property<TimeSpan>("StartTime");
 
@@ -318,6 +504,19 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Tbl_Mast_Department");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.DiscountType", b =>
+                {
+                    b.Property<int>("DTId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Discount");
+
+                    b.HasKey("DTId");
+
+                    b.ToTable("Tbl_Mast_DiscountType");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", b =>
@@ -416,6 +615,153 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.ToTable("Tbl_EmployeeDetail");
                 });
 
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.EmployeeRoster", b =>
+                {
+                    b.Property<int>("RosterId");
+
+                    b.Property<int>("BranchId");
+
+                    b.Property<int?>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("Empno")
+                        .HasColumnName("EMPNo");
+
+                    b.Property<int>("EnteredBy");
+
+                    b.Property<DateTime>("EnteredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<TimeSpan>("InTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<TimeSpan>("OutTime");
+
+                    b.Property<DateTime>("WorkingDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("RosterId")
+                        .HasName("PK_Tbl_RosterDetail");
+
+                    b.HasIndex("Empno");
+
+                    b.ToTable("Tbl_EmployeeRoster");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.PaymentType", b =>
+                {
+                    b.Property<int>("Ptid")
+                        .HasColumnName("PTId");
+
+                    b.Property<int?>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("EnteredBy");
+
+                    b.Property<DateTime>("EnteredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Ptname")
+                        .IsRequired()
+                        .HasColumnName("PTName")
+                        .HasMaxLength(50)
+                        .IsUnicode(false);
+
+                    b.HasKey("Ptid");
+
+                    b.ToTable("Tbl_Mast_PaymentType");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.Product", b =>
+                {
+                    b.Property<string>("ItemId")
+                        .HasColumnName("ItemID")
+                        .HasMaxLength(4)
+                        .IsUnicode(false);
+
+                    b.Property<string>("Barcode")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnName("BranchID");
+
+                    b.Property<int?>("CatId")
+                        .HasColumnName("CatID");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(50);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("ItemName")
+                        .HasMaxLength(100);
+
+                    b.Property<decimal?>("LastPurchasePrice")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("LeadTime")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<decimal?>("MaxQty")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("MinQty")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("ProductSellingPriceItemId")
+                        .HasColumnType("char(4)");
+
+                    b.Property<decimal?>("ReOrderLevel")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("ReOrderQty")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("UnitId")
+                        .HasColumnName("UnitID");
+
+                    b.HasKey("ItemId")
+                        .HasName("PK_Items");
+
+                    b.HasIndex("ProductSellingPriceItemId");
+
+                    b.ToTable("Tbl_Product");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.ProductSellingPrice", b =>
+                {
+                    b.Property<string>("ItemId")
+                        .HasColumnName("ItemID")
+                        .HasMaxLength(4)
+                        .IsUnicode(false);
+
+                    b.Property<decimal?>("SellingPrice")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("ItemId")
+                        .HasName("PK_ItemSellingPrice");
+
+                    b.ToTable("Tbl_ProductSellingPrice");
+                });
+
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCompany", b =>
                 {
                     b.Property<int>("CompanyId");
@@ -444,148 +790,6 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.HasKey("ConfigId");
 
                     b.ToTable("Tbl_Config");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceHeader", b =>
-                {
-                    b.Property<string>("InvoiceNo")
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.Property<int>("BranchId");
-
-                    b.Property<string>("CancelReason")
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-
-                    b.Property<int?>("CanceledBy");
-
-                    b.Property<DateTime?>("CanceledDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("Cstid")
-                        .HasColumnName("CSTId");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.Property<int>("DepartmentId");
-
-                    b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("DueAmount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("EnteredBy");
-
-                    b.Property<DateTime>("EnteredDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("GvinvoiceNo")
-                        .HasColumnName("GVInvoiceNo")
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.Property<DateTime>("InvDateTime")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("IsCanceled");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("Ptid")
-                        .HasColumnName("PTId");
-
-                    b.Property<decimal>("SubTotalAmount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("TaxAmount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("TransType")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.HasKey("InvoiceNo");
-
-                    b.HasIndex("Cstid");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("Ptid");
-
-                    b.ToTable("Tbl_CustomerInvoiceHeader");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceProducts", b =>
-                {
-                    b.Property<int>("Cipid")
-                        .HasColumnName("CIPId");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("InvoiceNo")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .IsUnicode(false);
-
-                    b.Property<decimal>("Qty")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("Cipid");
-
-                    b.HasIndex("InvoiceNo");
-
-                    b.ToTable("Tbl_CustomerInvoiceProducts");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceTreatment", b =>
-                {
-                    b.Property<int>("Citid")
-                        .HasColumnName("CITId");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Empno")
-                        .HasColumnName("EMPNo");
-
-                    b.Property<string>("InvoiceNo")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Ttid")
-                        .HasColumnName("TTId");
-
-                    b.HasKey("Citid");
-
-                    b.HasIndex("Empno");
-
-                    b.HasIndex("InvoiceNo");
-
-                    b.HasIndex("Ttid");
-
-                    b.ToTable("Tbl_CustomerInvoiceTreatment");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblEmployeeAllowances", b =>
@@ -859,47 +1063,6 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.HasIndex("LeaveTypeId");
 
                     b.ToTable("Tbl_EmployeeLeave");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblEmployeeRoster", b =>
-                {
-                    b.Property<int>("RosterId");
-
-                    b.Property<int>("BranchId");
-
-                    b.Property<int?>("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("Empno")
-                        .HasColumnName("EMPNo");
-
-                    b.Property<int>("EnteredBy");
-
-                    b.Property<DateTime>("EnteredDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<TimeSpan>("InTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<TimeSpan>("OutTime");
-
-                    b.Property<DateTime>("WorkingDate")
-                        .HasColumnType("date");
-
-                    b.HasKey("RosterId")
-                        .HasName("PK_Tbl_RosterDetail");
-
-                    b.HasIndex("Empno");
-
-                    b.ToTable("Tbl_EmployeeRoster");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblEmployeeSalarySupport", b =>
@@ -1249,39 +1412,6 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.ToTable("Tbl_Mast_OriginCountry");
                 });
 
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblMastPaymentType", b =>
-                {
-                    b.Property<int>("Ptid")
-                        .HasColumnName("PTId");
-
-                    b.Property<int?>("DeletedBy");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("EnteredBy");
-
-                    b.Property<DateTime>("EnteredDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Ptname")
-                        .IsRequired()
-                        .HasColumnName("PTName")
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-
-                    b.HasKey("Ptid");
-
-                    b.ToTable("Tbl_Mast_PaymentType");
-                });
-
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblMastProductCategory", b =>
                 {
                     b.Property<int>("CatId")
@@ -1406,58 +1536,6 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.HasKey("MonthId");
 
                     b.ToTable("Tbl_Month");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblProduct", b =>
-                {
-                    b.Property<string>("ItemId")
-                        .HasColumnName("ItemID")
-                        .HasMaxLength(4)
-                        .IsUnicode(false);
-
-                    b.Property<string>("Barcode")
-                        .HasMaxLength(100)
-                        .IsUnicode(false);
-
-                    b.Property<int?>("BranchId")
-                        .HasColumnName("BranchID");
-
-                    b.Property<int?>("CatId")
-                        .HasColumnName("CatID");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(50);
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("ItemName")
-                        .HasMaxLength(100);
-
-                    b.Property<decimal?>("LastPurchasePrice")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal?>("LeadTime")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<decimal?>("MaxQty")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal?>("MinQty")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal?>("ReOrderLevel")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal?>("ReOrderQty")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int?>("UnitId")
-                        .HasColumnName("UnitID");
-
-                    b.HasKey("ItemId")
-                        .HasName("PK_Items");
-
-                    b.ToTable("Tbl_Product");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblProductGindetails", b =>
@@ -1755,22 +1833,6 @@ namespace BeautyPro.CRM.EF.Migrations
                     b.ToTable("Tbl_ProductReceptionGRNHeader");
                 });
 
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblProductSellingPrice", b =>
-                {
-                    b.Property<string>("ItemId")
-                        .HasColumnName("ItemID")
-                        .HasMaxLength(4)
-                        .IsUnicode(false);
-
-                    b.Property<decimal?>("SellingPrice")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.HasKey("ItemId")
-                        .HasName("PK_ItemSellingPrice");
-
-                    b.ToTable("Tbl_ProductSellingPrice");
-                });
-
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblProductSrndetails", b =>
                 {
                     b.Property<string>("Srnno")
@@ -1966,6 +2028,8 @@ namespace BeautyPro.CRM.EF.Migrations
 
                     b.Property<int>("BranchId");
 
+                    b.Property<string>("ColorCode");
+
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18, 2)");
 
@@ -2019,6 +2083,8 @@ namespace BeautyPro.CRM.EF.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime");
+
+                    b.Property<int?>("DepartmentId");
 
                     b.Property<string>("Designation")
                         .HasMaxLength(50)
@@ -2075,7 +2141,7 @@ namespace BeautyPro.CRM.EF.Migrations
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.Customer", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Branch", "Branch")
-                        .WithMany("TblCustomer")
+                        .WithMany("Customers")
                         .HasForeignKey("BranchId")
                         .HasConstraintName("FK_Tbl_Customer_Tbl_Branch");
                 });
@@ -2083,7 +2149,7 @@ namespace BeautyPro.CRM.EF.Migrations
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerGiftVoucher", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Customer", "Customer")
-                        .WithMany("TblCustomerGiftVoucher")
+                        .WithMany("CustomerGiftVouchers")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Customer");
 
@@ -2092,7 +2158,7 @@ namespace BeautyPro.CRM.EF.Migrations
                         .HasForeignKey("DepartmentId")
                         .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Mast_Department");
 
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TblMastPaymentType", "Pt")
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.PaymentType", "Pt")
                         .WithMany("TblCustomerGiftVoucher")
                         .HasForeignKey("Ptid")
                         .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Mast_PaymentType");
@@ -2103,10 +2169,72 @@ namespace BeautyPro.CRM.EF.Migrations
                         .HasConstraintName("FK_Tbl_CustomerGiftVoucher_Tbl_Mast_TreatmentType");
                 });
 
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceHeader", b =>
+                {
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CreditCardType", "CreditCardType")
+                        .WithMany()
+                        .HasForeignKey("CCTId");
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerScheduleTreatment")
+                        .WithMany("TblCustomerInvoiceHeader")
+                        .HasForeignKey("CustomerScheduleTreatmentCstid");
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.Department", "Department")
+                        .WithMany("TblCustomerInvoiceHeader")
+                        .HasForeignKey("DepartmentId")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_Department");
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.PaymentType", "Pt")
+                        .WithMany("TblCustomerInvoiceHeader")
+                        .HasForeignKey("Ptid")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_PaymentType");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceProducts", b =>
+                {
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "EmpnoNavigation")
+                        .WithMany()
+                        .HasForeignKey("Empno")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceHeader", "InvoiceNoNavigation")
+                        .WithMany("CustomerInvoiceProducts")
+                        .HasForeignKey("InvoiceNo")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceProducts_Tbl_CustomerInvoiceHeader");
+                });
+
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceTreatment", b =>
+                {
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerScheduleTreatment", "Cst")
+                        .WithMany()
+                        .HasForeignKey("Cstid")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "EmpnoNavigation")
+                        .WithMany("TblCustomerInvoiceTreatment")
+                        .HasForeignKey("Empno")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_EmployeeDetail");
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerInvoiceHeader", "InvoiceNoNavigation")
+                        .WithMany("CustomerInvoiceTreatments")
+                        .HasForeignKey("InvoiceNo")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_CustomerInvoiceHeader");
+
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TreatmentType", "Tt")
+                        .WithMany("TblCustomerInvoiceTreatment")
+                        .HasForeignKey("Ttid")
+                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_Mast_TreatmentType");
+                });
+
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerSchedule", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Customer", "Customer")
-                        .WithMany("TblCustomerSchedule")
+                        .WithMany("CustomerSchedules")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK_Tbl_CustomerSchedule_Tbl_Customer");
 
@@ -2118,12 +2246,12 @@ namespace BeautyPro.CRM.EF.Migrations
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.CustomerScheduleTreatment", b =>
                 {
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerSchedule", "Cs")
-                        .WithMany("TblCustomerScheduleTreatment")
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerSchedule", "CustomerSchedule")
+                        .WithMany("CustomerScheduleTreatments")
                         .HasForeignKey("Csid")
                         .HasConstraintName("FK_Tbl_CustomerScheduleTreatment_Tbl_CustomerSchedule");
 
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "EmpnoNavigation")
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "Employee")
                         .WithMany("TblCustomerScheduleTreatment")
                         .HasForeignKey("Empno")
                         .HasConstraintName("FK_Tbl_CustomerScheduleTreatment_Tbl_EmployeeDetail");
@@ -2137,7 +2265,7 @@ namespace BeautyPro.CRM.EF.Migrations
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.Department", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Branch", "Branch")
-                        .WithMany("TblMastDepartment")
+                        .WithMany("Departments")
                         .HasForeignKey("BranchId")
                         .HasConstraintName("FK_Tbl_Mast_Department_Tbl_Branch");
                 });
@@ -2170,48 +2298,19 @@ namespace BeautyPro.CRM.EF.Migrations
                         .HasConstraintName("FK_Tbl_EmployeeDetail_Tbl_Mast_Nationality");
                 });
 
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceHeader", b =>
-                {
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.CustomerScheduleTreatment", "Cst")
-                        .WithMany("TblCustomerInvoiceHeader")
-                        .HasForeignKey("Cstid")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_CustomerScheduleTreatment");
-
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.Department", "Department")
-                        .WithMany("TblCustomerInvoiceHeader")
-                        .HasForeignKey("DepartmentId")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_Department");
-
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TblMastPaymentType", "Pt")
-                        .WithMany("TblCustomerInvoiceHeader")
-                        .HasForeignKey("Ptid")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceHeader_Tbl_Mast_PaymentType");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceProducts", b =>
-                {
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceHeader", "InvoiceNoNavigation")
-                        .WithMany("TblCustomerInvoiceProducts")
-                        .HasForeignKey("InvoiceNo")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceProducts_Tbl_CustomerInvoiceHeader");
-                });
-
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceTreatment", b =>
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.EmployeeRoster", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "EmpnoNavigation")
-                        .WithMany("TblCustomerInvoiceTreatment")
+                        .WithMany("EmployeeRosters")
                         .HasForeignKey("Empno")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_EmployeeDetail");
+                        .HasConstraintName("FK_Tbl_RosterDetail_Tbl_EmployeeDetail");
+                });
 
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TblCustomerInvoiceHeader", "InvoiceNoNavigation")
-                        .WithMany("TblCustomerInvoiceTreatment")
-                        .HasForeignKey("InvoiceNo")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_CustomerInvoiceHeader");
-
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.TreatmentType", "Tt")
-                        .WithMany("TblCustomerInvoiceTreatment")
-                        .HasForeignKey("Ttid")
-                        .HasConstraintName("FK_Tbl_CustomerInvoiceTreatment_Tbl_Mast_TreatmentType");
+            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.Product", b =>
+                {
+                    b.HasOne("BeautyPro.CRM.EF.DomainModel.ProductSellingPrice", "ProductSellingPrice")
+                        .WithMany()
+                        .HasForeignKey("ProductSellingPriceItemId");
                 });
 
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblEmployeeAllowances", b =>
@@ -2274,18 +2373,10 @@ namespace BeautyPro.CRM.EF.Migrations
                         .HasConstraintName("FK_Tbl_EmployeeLeave_Tbl_Mast_LeaveType");
                 });
 
-            modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblEmployeeRoster", b =>
-                {
-                    b.HasOne("BeautyPro.CRM.EF.DomainModel.EmployeeDetail", "EmpnoNavigation")
-                        .WithMany("TblEmployeeRoster")
-                        .HasForeignKey("Empno")
-                        .HasConstraintName("FK_Tbl_RosterDetail_Tbl_EmployeeDetail");
-                });
-
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TblMastDesignation", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Branch", "Branch")
-                        .WithMany("TblMastDesignation")
+                        .WithMany("Designations")
                         .HasForeignKey("BranchId")
                         .HasConstraintName("FK_Tbl_Mast_Designation_Tbl_Branch");
                 });
@@ -2293,7 +2384,7 @@ namespace BeautyPro.CRM.EF.Migrations
             modelBuilder.Entity("BeautyPro.CRM.EF.DomainModel.TreatmentType", b =>
                 {
                     b.HasOne("BeautyPro.CRM.EF.DomainModel.Branch", "Branch")
-                        .WithMany("TblMastTreatmentType")
+                        .WithMany("TreatmentTypes")
                         .HasForeignKey("BranchId")
                         .HasConstraintName("FK_Tbl_Mast_TreatmentType_Tbl_Branch");
 
