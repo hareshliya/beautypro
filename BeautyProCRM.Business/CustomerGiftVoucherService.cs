@@ -1,6 +1,7 @@
 ﻿using BeautyPro.CRM.Contract.DTO;
 using BeautyPro.CRM.Contract.DTO.Enums;
 using BeautyPro.CRM.Contract.DTO.UI;
+using BeautyPro.CRM.EF.DomainModel;
 using BeautyPro.CRM.EF.Interfaces;
 using BeautyPro.CRM.Mapper;
 using BeautyProCRM.Business.Interfaces;
@@ -16,25 +17,30 @@ namespace BeautyProCRM.Business
     {
         private readonly ICustomerGiftVoucherRepository _customerGiftVoucherRepository;
         private readonly IPaymentTypeRepository _paymentTypeRepository;
+        private readonly IUserRepository _userRepository;
+
         public CustomerGiftVoucherService(
             ICustomerGiftVoucherRepository customerGiftVoucherRepository,
-            IPaymentTypeRepository paymentTypeRepository
+            IPaymentTypeRepository paymentTypeRepository,
+            IUserRepository userRepository
             )
         {
-            this._customerGiftVoucherRepository = customerGiftVoucherRepository;
-            this._paymentTypeRepository = paymentTypeRepository;
+            _customerGiftVoucherRepository = customerGiftVoucherRepository;
+            _paymentTypeRepository = paymentTypeRepository;
+            _userRepository = userRepository;
         }
 
         public List<CustomerGiftVoucherDTO> GetAllVouchers(VoucherRequest request)
         {
-            var vouchers =
-                _customerGiftVoucherRepository
-                .All
-                .Where(x => x.DepartmentId == request.DepartmentId)
-                .Include(x => x.Customer)
-                .Where(x => x.InvDateTime.Date == request.Date.Date);
+            var vouchers = _customerGiftVoucherRepository
+                        .All
+                        .Where(x => x.DepartmentId == request.DepartmentId)
+                        .Include(x => x.Customer)
+                        .Where(x => x.InvDateTime.Date == request.Date.Date && !x.IsCanceled && x.CanceledBy == null)
+                        .Join(_userRepository.All, n => n.EnteredBy, l => l.UserId, (v, usr) =>
+                            UpdateCustomerGiftVoucherDomain(v,usr.UserName));
 
-            if(request.Status == VoucherStatus.Redeemed)
+            if (request.Status == VoucherStatus.Redeemed)
             {
                 return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.Where(x => x.IsRedeem).ToList());
             } 
@@ -52,6 +58,12 @@ namespace BeautyProCRM.Business
             }
 
             return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.ToList());
+        }
+
+        private CustomerGiftVoucher UpdateCustomerGiftVoucherDomain(CustomerGiftVoucher gv, string issuedBy)
+        {
+            gv.IssuedBy = issuedBy;
+            return gv;
         }
 
         public void AddEditVoucher(CustomerGiftVoucherDTO request, int userId, int branchId)

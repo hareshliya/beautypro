@@ -28,5 +28,6 @@ namespace BeautyPro.CRM.Contract.DTO
         public DateTime EnteredDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? CanceledDate { get; set; }
+        public string IssuedBy { get; set; }
     }
 }

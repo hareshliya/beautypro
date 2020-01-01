@@ -33,5 +33,8 @@ namespace BeautyPro.CRM.EF.DomainModel
         public virtual Department Department { get; set; }
         public virtual PaymentType Pt { get; set; }
         public virtual TreatmentType Tt { get; set; }
+
+        [NotMapped]
+        public string IssuedBy { get; set; }
     }
 }
