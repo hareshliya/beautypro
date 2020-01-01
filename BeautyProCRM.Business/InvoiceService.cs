@@ -18,7 +18,7 @@ namespace BeautyProCRM.Business
     {
         private readonly ICustomerInvoiceHeaderRepository _customerInvoiceHeaderRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ICustomerGiftVoucherRepository _customerGiftVoucherRepository
+        private readonly ICustomerGiftVoucherRepository _customerGiftVoucherRepository;
 
         public InvoiceService(
             ICustomerInvoiceHeaderRepository customerInvoiceHeaderRepository,
