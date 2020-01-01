@@ -13,5 +13,6 @@ namespace BeautyProCRM.Business.Interfaces
         List<PaymentTypeDTO> GetPaymentTypes();
         void DeleteVoucher(VoucherDeleteRequest request, int userId);
         void ChangeVoucherStatus(VoucherStatusRequest request);
+        CustomerGiftVoucherDTO GetVoucher(string gvInvoiceNo);
     }
 }

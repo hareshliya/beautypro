@@ -18,13 +18,16 @@ namespace BeautyProCRM.Business
     {
         private readonly ICustomerInvoiceHeaderRepository _customerInvoiceHeaderRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICustomerGiftVoucherRepository _customerGiftVoucherRepository
 
         public InvoiceService(
             ICustomerInvoiceHeaderRepository customerInvoiceHeaderRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ICustomerGiftVoucherRepository customerGiftVoucherRepository)
         {
             _customerInvoiceHeaderRepository = customerInvoiceHeaderRepository;
             _userRepository = userRepository;
+            _customerGiftVoucherRepository = customerGiftVoucherRepository; ;
         }
 
 
@@ -119,7 +122,8 @@ namespace BeautyProCRM.Business
                     EnteredDate = DateTime.Now,
                     CustomerId = request.CustomerId,
                     InvDateTime = DateTime.Now,
-                    TransType = "Cash",
+                    //TransType = "Cash",
+                    TransType = request.TransType,
                     Ptid = 1,
                     DepartmentId = request.DepartmentId,
                     // IsCanceled = false,
@@ -133,15 +137,40 @@ namespace BeautyProCRM.Business
                     ProductDueAmount = request.ProductDueAmount,
                     ProductTaxAmount = request.ProductsTaxAmount,
                     TreatmentDiscountAmount = request.TreatmentDiscountAmount,
-                    CCTId = request.CreditCardTypeId
+                    CCTId = request.CreditCardTypeId,
+                    GvinvoiceNo = !string.IsNullOrWhiteSpace(request.GvinvoiceNo) ? 
+                                    request.GvinvoiceNo : null
                 };
 
                 _customerInvoiceHeaderRepository.Add(invoiceHeader);
                 _customerInvoiceHeaderRepository.SaveChanges();
+
+                if(!string.IsNullOrWhiteSpace(request.GvinvoiceNo) && request.GVRedeemedAmount > 0)
+                {
+                    ProcessVoucher(request.GvinvoiceNo, request.GVRedeemedAmount);
+                }
             }
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        private void ProcessVoucher(string gvInvoiceNo, decimal redeemedAmount)
+        {
+            var giftVoucher = _customerGiftVoucherRepository
+                .FirstOrDefault(x => x.GvinvoiceNo == gvInvoiceNo);
+
+            if (giftVoucher != null && giftVoucher.DueAmount > 0)
+            {              
+                giftVoucher.DueAmount = redeemedAmount > giftVoucher.DueAmount ? 0 : giftVoucher.DueAmount - redeemedAmount;
+
+                if (giftVoucher.DueAmount == 0)
+                {
+                    giftVoucher.IsRedeem = true;
+                }
+
+                _customerGiftVoucherRepository.SaveChanges();
             }
         }
 

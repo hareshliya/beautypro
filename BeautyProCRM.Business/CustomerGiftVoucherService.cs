@@ -60,6 +60,11 @@ namespace BeautyProCRM.Business
             return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers.ToList());
         }
 
+        public CustomerGiftVoucherDTO GetVoucher(string gvInvoiceNo)
+        {
+            return DomainDTOMapper.ToCustomerGiftVoucherDTO(_customerGiftVoucherRepository.FirstOrDefault(x => x.GvinvoiceNo == gvInvoiceNo));
+        }
+
         private CustomerGiftVoucher UpdateCustomerGiftVoucherDomain(CustomerGiftVoucher gv, string issuedBy)
         {
             gv.IssuedBy = issuedBy;
@@ -102,6 +107,7 @@ namespace BeautyProCRM.Business
                 voucher.CustomerId = request.CustomerId;
                 //voucher.DepartmentId = request.DepartmentId;
                 voucher.DueAmount = request.DueAmount;
+                voucher.SubTotalAmount = request.DueAmount;
                 //voucher.InvDateTime = request.InvDateTime;
                 voucher.ModifiedBy = userId;
                 voucher.ModifiedDate = DateTime.Now;
