@@ -36,7 +36,7 @@ namespace BeautyProCRM.Business
                         .All
                         .Where(x => x.DepartmentId == request.DepartmentId)
                         .Include(x => x.Customer)
-                        .Where(x => x.InvDateTime.Date == request.Date.Date && !x.IsCanceled && x.CanceledBy == null)
+                        .Where(x => (x.InvDateTime.Date == request.Date.Date || true) && !x.IsCanceled && x.CanceledBy == null)
                         .Join(_userRepository.All, n => n.EnteredBy, l => l.UserId, (v, usr) =>
                             UpdateCustomerGiftVoucherDomain(v,usr.UserName));
 
