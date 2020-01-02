@@ -30,7 +30,15 @@ namespace BeautyPro.CRM.Api.Controllers
         [ProducesResponseType(typeof(CustomerGiftVoucherDTO), (int)HttpStatusCode.OK)]
         public ActionResult GetFilteredVouchers([FromQuery]VoucherRequest request)
         {
-            return Ok(_customerGiftVoucherService.GetAllVouchers(request));
+            return Ok(_customerGiftVoucherService.GetFilteredVouchers(request));
+        }
+
+        [HttpGet("issued-vouchers")]
+        [Authorize]
+        [ProducesResponseType(typeof(CustomerGiftVoucherDTO), (int)HttpStatusCode.OK)]
+        public ActionResult GetIssuedVouchers([FromQuery]IssuedVoucherRequest request)
+        {
+            return Ok(_customerGiftVoucherService.GetIssuedVouchers(request));
         }
 
         [HttpPost("save")]
