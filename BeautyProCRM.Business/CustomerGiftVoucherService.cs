@@ -65,7 +65,7 @@ namespace BeautyProCRM.Business
             var vouchers = _customerGiftVoucherRepository
                         .All
                         .Include(x => x.Customer)
-                        .Where(x => x.DepartmentId == request.DepartmentId && !x.IsCanceled && !x.IsRedeem && x.CustomerId == request.CustomerId)
+                        .Where(x => !x.IsCanceled && !x.IsRedeem && x.CustomerId == request.CustomerId)
                         .ToList();
 
             return DomainDTOMapper.ToCustomerGiftVoucherDTOs(vouchers);

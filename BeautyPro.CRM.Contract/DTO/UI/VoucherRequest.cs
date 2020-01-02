@@ -15,6 +15,5 @@ namespace BeautyPro.CRM.Contract.DTO.UI
     public class IssuedVoucherRequest
     {
         public string CustomerId { get; set; }
-        public int DepartmentId { get; set; }
     }
 }
