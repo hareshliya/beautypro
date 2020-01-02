@@ -61,7 +61,7 @@ namespace BeautyProCRM.Business
                 .FirstOrDefault());
         }
 
-        public void SaveInvoice(InvoiceSaveRequest request, int branchId, int userId)
+        public string SaveInvoice(InvoiceSaveRequest request, int branchId, int userId)
         {
             try
             {
@@ -149,6 +149,8 @@ namespace BeautyProCRM.Business
                 {
                     ProcessVoucher(request.GvinvoiceNo, request.GVRedeemedAmount);
                 }
+
+                return invoiceNo;
             }
             catch (Exception ex)
             {

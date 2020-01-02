@@ -36,9 +36,8 @@ namespace BeautyPro.CRM.Api.Controllers
         public IActionResult SaveInvoice([FromBody]InvoiceSaveRequest request)
         {
             try
-            {
-                _invoiceService.SaveInvoice(request, BranchId, UserId);
-                return Ok(HttpStatusCode.OK);
+            {          
+                return Ok(_invoiceService.SaveInvoice(request, BranchId, UserId));
             }
             catch (Exception ex)
             {
