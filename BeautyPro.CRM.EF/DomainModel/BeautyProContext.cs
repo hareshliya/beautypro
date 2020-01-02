@@ -326,7 +326,7 @@ namespace BeautyPro.CRM.EF.DomainModel
                 //entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.TransType)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
